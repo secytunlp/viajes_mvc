@@ -1,0 +1,170 @@
+<!-- BEGIN: main -->
+<style>
+#ambitos{
+
+}
+#ambitos fieldset {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 4px 4px 0 0;
+    box-shadow:none;
+    margin-top: 1em;
+    padding: 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#ambitos .tblFooters {
+    /*margin-top: -16px;*/
+    background: none;
+    border:none;
+    text-align: center;
+    margin-bottom: -34px;
+    margin-top: -16px;
+}
+#ambitos .camposRequeridos {
+    display: none;
+}
+#ambitos form fieldset .item {
+    padding: 1px;
+}
+</style>
+
+
+
+<script type="text/javascript">
+
+function before_submit_ambito(){
+
+	wait("#tbody_ambitos");
+}
+
+function remove_ambito( itemOid ){
+
+	before_submit_ambito();
+	soft_load(false, "doAction?action=delete_ambito_session&item_oid="+itemOid, "GET", null, show_ambitos, false);
+}
+
+function add_ambito( data ){
+	show_ambitos( data );
+	$("#item_oid").val("");
+	$("#item_oid").blur();
+	//$("#item_oid").focus();
+}
+
+function show_ambitos( data ){
+	
+	var data = $.parseJSON(data);
+	if( data != null && data["error"]!=null){
+		showMessageError( data["error"], true );
+	}
+	
+	if( data != null && data["ambitos"]!=null){
+
+		var ambitos = data["ambitos"];
+		var ambitoColumns = data["ambitoColumns"];
+		var ambitoColumnsAlign = data["ambitoColumnsAlign"];
+		var ambitoColumnsLabels = data["ambitoColumnsLabels"];
+
+		$('#thead_ambitos').find('tr').remove();
+		$("#thead_ambitos").last().append( $('<tr>') );
+		var trHeadAmbito = $('#thead_ambitos').find('tr').last();
+		
+		for( var colIndex=0; colIndex < ambitoColumnsLabels.length;colIndex++){
+
+			var label = ambitoColumnsLabels[colIndex];
+			var align =  ambitoColumnsAlign[colIndex];
+			trHeadAmbito.append($('<th>')
+	                .text( label )
+	                .attr('style', 'text-align:' + align + ';')
+	            );
+			
+		}
+
+		$('#tbody_ambitos').find('tr').remove();
+				
+		for( var index=0; index< ambitos.length;index++){
+
+			var ambito = ambitos[index];
+
+			$("#tbody_ambitos").last().append( $('<tr>') );
+			
+			var trAmbito = $('#tbody_ambitos').find('tr').last();
+			
+			for( var colIndex=0; colIndex < ambitoColumns.length;colIndex++){
+
+				var column = ambitoColumns[colIndex];
+				var align =  ambitoColumnsAlign[colIndex];
+				var valor = ambito[column]; 
+
+				trAmbito.append($('<td>')
+		                .text( valor )
+		                .attr('style', 'text-align:' + align + ';')
+		            );
+				
+			}
+
+
+			trAmbito.append($('<td>')
+					.attr('style', 'text-align:center;')
+					.append($('<href>')
+							.append($('<img>')
+					                .attr('src', '{WEB_PATH}css/smile/images/chk_off.png')
+					                .text('quitar')
+					            )
+					        .attr('href', '#')
+					        .attr('style', 'cursor:pointer;')
+					        .attr('onclick', 'javascript: remove_ambito( encodeURI( \"' + ambito["item_oid"] +  '\")); return false;' )
+			            )
+	            ); 
+
+		}
+		
+	}
+
+	wakeUp("#tbody_ambitos");
+	
+	$("#ds_institucion").val("");		
+	$("#ds_ciudad").val("");
+	$("#ds_pais").val("");
+	$("#dt_desde").val("");
+	$("#dt_hasta").val("");
+	$("#ds_institucion").focus();
+	
+	
+}
+
+
+
+</script>
+<div id="ambitos">
+<fieldset>
+	<legend>{ambitos_title}</legend>
+<table id="ambitos">
+   	<thead id="thead_ambitos">
+   	<tr>
+   		<!-- BEGIN: ambito_th -->
+   		<th style="text-align: {align};">{ambito_label}</th>
+   		<!-- END: ambito_th -->
+   		<th></th>
+   	</tr>
+   	</thead>
+   	<tbody id="tbody_ambitos">
+   	<!-- BEGIN: ambito -->   	
+   	<tr>
+   		<!-- BEGIN: ambito_data -->	
+   		<td style="text-align: {align};">{data}</td>
+   		<!-- END: ambito_data -->
+   		
+   		<td style="text-align: center;">
+   			<!-- BEGIN:editar_ambito -->
+   			<a href="#"><img src='{WEB_PATH}css/smile/images/chk_off.png' style="cursor:pointer;" onclick="javascript: remove_ambito(encodeURI('{item_oid}')); return false;"></a>
+   			<!-- END:editar_ambito -->
+   		</td>
+   	</tr>
+   	<!-- END: ambito -->
+   	</tbody>
+</table>
+<br />
+{formulario}
+</fieldset>
+    
+</div>
+<!-- END: main -->

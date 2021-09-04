@@ -1,0 +1,178 @@
+<!-- BEGIN: main -->
+<style>
+#presupuestos{
+
+}
+#presupuestos fieldset {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 4px 4px 0 0;
+    box-shadow:none;
+    margin-top: 1em;
+    padding: 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#presupuestos .tblFooters {
+    /*margin-top: -16px;*/
+    background: none;
+    border:none;
+    text-align: center;
+    margin-bottom: -34px;
+    margin-top: -16px;
+}
+#presupuestos .camposRequeridos {
+    display: none;
+}
+#presupuestos form fieldset .item {
+    padding: 1px;
+}
+#total{
+	text-align: right;
+	font-weight: bold;
+}
+</style>
+
+
+
+<script type="text/javascript">
+
+function before_submit_presupuesto(){
+
+	wait("#tbody_presupuestos");
+}
+
+function remove_presupuesto( itemOid ){
+
+	before_submit_presupuesto();
+	soft_load(false, "doAction?action=delete_presupuesto_session&item_oid="+itemOid, "GET", null, show_presupuestos, false);
+}
+
+function add_presupuesto( data ){
+	show_presupuestos( data );
+	$("#item_oid").val("");
+	$("#item_oid").blur();
+	//$("#item_oid").focus();
+}
+
+function show_presupuestos( data ){
+	
+	var data = $.parseJSON(data);
+	if( data != null && data["error"]!=null){
+		showMessageError( data["error"], true );
+	}
+	
+	if( data != null && data["presupuestos"]!=null){
+
+		var presupuestos = data["presupuestos"];
+		var total = data["total"];
+		var presupuestoColumns = data["presupuestoColumns"];
+		var presupuestoColumnsAlign = data["presupuestoColumnsAlign"];
+		var presupuestoColumnsLabels = data["presupuestoColumnsLabels"];
+		$('#tot').html(total);
+		$('#thead_presupuestos').find('tr').remove();
+		$("#thead_presupuestos").last().append( $('<tr>') );
+		var trHeadPresupuesto = $('#thead_presupuestos').find('tr').last();
+		
+		for( var colIndex=0; colIndex < presupuestoColumnsLabels.length;colIndex++){
+
+			var label = presupuestoColumnsLabels[colIndex];
+			var align =  presupuestoColumnsAlign[colIndex];
+			trHeadPresupuesto.append($('<th>')
+	                .text( label )
+	                .attr('style', 'text-align:' + align + ';')
+	            );
+			
+		}
+
+		$('#tbody_presupuestos').find('tr').remove();
+				
+		for( var index=0; index< presupuestos.length;index++){
+
+			var presupuesto = presupuestos[index];
+
+			$("#tbody_presupuestos").last().append( $('<tr>') );
+			
+			var trPresupuesto = $('#tbody_presupuestos').find('tr').last();
+			
+			for( var colIndex=0; colIndex < presupuestoColumns.length;colIndex++){
+
+				var column = presupuestoColumns[colIndex];
+				var align =  presupuestoColumnsAlign[colIndex];
+				var valor = presupuesto[column]; 
+
+				trPresupuesto.append($('<td>')
+		                .text( valor )
+		                .attr('style', 'text-align:' + align + ';')
+		            );
+				
+			}
+
+
+			trPresupuesto.append($('<td>')
+					.attr('style', 'text-align:center;')
+					.append($('<href>')
+							.append($('<img>')
+					                .attr('src', '{WEB_PATH}css/smile/images/chk_off.png')
+					                .text('quitar')
+					            )
+					        .attr('href', '#')
+					        .attr('style', 'cursor:pointer;')
+					        .attr('onclick', 'javascript: remove_presupuesto( encodeURI( \"' + presupuesto["item_oid"] +  '\")); return false;' )
+			            )
+	            ); 
+
+		}
+		
+	}
+
+	wakeUp("#tbody_presupuestos");
+	
+	$("#dt_fecha").val("");		
+	$("#ds_presupuesto").val("");
+	$("#ds_dias").val("");
+	$("#ds_lugar").val("");
+	$("#ds_pasajes").val("");
+	$("#ds_destino").val("");
+	$("#ds_inscripcion").val("");
+	$("#nu_montopresupuesto").val("");
+	
+	
+}
+
+
+
+</script>
+<div id="presupuestos">
+<fieldset>
+	<legend>{presupuestos_title}</legend>
+<table id="presupuestos">
+   	<thead id="thead_presupuestos">
+   	<tr>
+   		<!-- BEGIN: presupuesto_th -->
+   		<th style="text-align: {align};">{presupuesto_label}</th>
+   		<!-- END: presupuesto_th -->
+   		<th></th>
+   	</tr>
+   	</thead>
+   	<tbody id="tbody_presupuestos">
+   	<!-- BEGIN: presupuesto -->   	
+   	<tr>
+   		<!-- BEGIN: presupuesto_data -->	
+   		<td style="text-align: {align};">{data}</td>
+   		<!-- END: presupuesto_data -->
+   		
+   		<td style="text-align: center;">
+   			<!-- BEGIN:editar_presupuesto -->
+   			<a href="#"><img src='{WEB_PATH}css/smile/images/chk_off.png' style="cursor:pointer;" onclick="javascript: remove_presupuesto(encodeURI('{item_oid}')); return false;"></a>
+   			<!-- END:editar_presupuesto -->
+   		</td>
+   	</tr>
+   	<!-- END: presupuesto -->
+   	</tbody>
+</table>
+<div id='total'>{total_lbl}:<span id=tot>{total}</span></div>
+
+{formulario}
+</fieldset>
+    
+</div>
+<!-- END: main -->

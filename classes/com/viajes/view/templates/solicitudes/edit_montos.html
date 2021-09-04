@@ -1,0 +1,170 @@
+<!-- BEGIN: main -->
+<style>
+#montos{
+
+}
+#montos fieldset {
+    background: none repeat scroll 0 0 #EEEEEE;
+    border-radius: 4px 4px 0 0;
+    box-shadow:none;
+    margin-top: 1em;
+    padding: 1.5em;
+    text-shadow: 0 1px 0 #FFFFFF;
+}
+#montos .tblFooters {
+    /*margin-top: -16px;*/
+    background: none;
+    border:none;
+    text-align: center;
+    margin-bottom: -34px;
+    margin-top: -16px;
+}
+#montos .camposRequeridos {
+    display: none;
+}
+#montos form fieldset .item {
+    padding: 1px;
+}
+</style>
+
+
+
+<script type="text/javascript">
+
+function before_submit_monto(){
+
+	wait("#tbody_montos");
+}
+
+function remove_monto( itemOid ){
+
+	before_submit_monto();
+	soft_load(false, "doAction?action=delete_monto_session&item_oid="+itemOid, "GET", null, show_montos, false);
+}
+
+function add_monto( data ){
+	show_montos( data );
+	$("#item_oid").val("");
+	$("#item_oid").blur();
+	//$("#item_oid").focus();
+}
+
+function show_montos( data ){
+	
+	var data = $.parseJSON(data);
+	if( data != null && data["error"]!=null){
+		showMessageError( data["error"], true );
+	}
+	
+	if( data != null && data["montos"]!=null){
+
+		var montos = data["montos"];
+		var montoColumns = data["montoColumns"];
+		var montoColumnsAlign = data["montoColumnsAlign"];
+		var montoColumnsLabels = data["montoColumnsLabels"];
+
+		$('#thead_montos').find('tr').remove();
+		$("#thead_montos").last().append( $('<tr>') );
+		var trHeadAmbito = $('#thead_montos').find('tr').last();
+		
+		for( var colIndex=0; colIndex < montoColumnsLabels.length;colIndex++){
+
+			var label = montoColumnsLabels[colIndex];
+			var align =  montoColumnsAlign[colIndex];
+			trHeadAmbito.append($('<th>')
+	                .text( label )
+	                .attr('style', 'text-align:' + align + ';')
+	            );
+			
+		}
+
+		$('#tbody_montos').find('tr').remove();
+				
+		for( var index=0; index< montos.length;index++){
+
+			var monto = montos[index];
+
+			$("#tbody_montos").last().append( $('<tr>') );
+			
+			var trAmbito = $('#tbody_montos').find('tr').last();
+			
+			for( var colIndex=0; colIndex < montoColumns.length;colIndex++){
+
+				var column = montoColumns[colIndex];
+				var align =  montoColumnsAlign[colIndex];
+				var valor = monto[column]; 
+
+				trAmbito.append($('<td>')
+		                .text( valor )
+		                .attr('style', 'text-align:' + align + ';')
+		            );
+				
+			}
+
+
+			trAmbito.append($('<td>')
+					.attr('style', 'text-align:center;')
+					.append($('<href>')
+							.append($('<img>')
+					                .attr('src', '{WEB_PATH}css/smile/images/chk_off.png')
+					                .text('quitar')
+					            )
+					        .attr('href', '#')
+					        .attr('style', 'cursor:pointer;')
+					        .attr('onclick', 'javascript: remove_monto( encodeURI( \"' + monto["item_oid"] +  '\")); return false;' )
+			            )
+	            ); 
+
+		}
+		
+	}
+
+	wakeUp("#tbody_montos");
+	
+	$("#ds_institucion").val("");		
+	$("#ds_caracter").val("");
+	$("#nu_monto").val("");
+	
+	
+	$("#ds_institucion").focus();
+	
+	
+}
+
+
+
+</script>
+<div id="montos">
+<fieldset>
+	<legend>{montos_title}</legend>
+<table id="montos">
+   	<thead id="thead_montos">
+   	<tr>
+   		<!-- BEGIN: monto_th -->
+   		<th style="text-align: {align};">{monto_label}</th>
+   		<!-- END: monto_th -->
+   		<th></th>
+   	</tr>
+   	</thead>
+   	<tbody id="tbody_montos">
+   	<!-- BEGIN: monto -->   	
+   	<tr>
+   		<!-- BEGIN: monto_data -->	
+   		<td style="text-align: {align};">{data}</td>
+   		<!-- END: monto_data -->
+   		
+   		<td style="text-align: center;">
+   			<!-- BEGIN:editar_monto -->
+   			<a href="#"><img src='{WEB_PATH}css/smile/images/chk_off.png' style="cursor:pointer;" onclick="javascript: remove_monto(encodeURI('{item_oid}')); return false;"></a>
+   			<!-- END:editar_monto -->
+   		</td>
+   	</tr>
+   	<!-- END: monto -->
+   	</tbody>
+</table>
+<br />
+{formulario}
+</fieldset>
+    
+</div>
+<!-- END: main -->

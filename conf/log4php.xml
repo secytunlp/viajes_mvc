@@ -1,0 +1,45 @@
+<configuration xmlns="http://logging.apache.org/log4php/">
+
+	<appender name="loggerDebug" class="LoggerAppenderDailyFile"
+		threshold="DEBUG">
+		<layout class="LoggerLayoutTTCC" />
+		<param name="file" value="D:/Documents/Mis Webs/viajes_mvc/logs/file-%s-debug.log" />
+		<param name="datePattern" value="Y-m-d" />
+	</appender>
+
+	<appender name="loggerInfo" class="LoggerAppenderDailyFile"
+		threshold="INFO">
+		<layout class="LoggerLayoutTTCC" />
+		<param name="file" value="D:/Documents/Mis Webs/viajes_mvc/logs/file-%s-info.log" />
+		<param name="datePattern" value="Y-m-d" />
+	</appender>
+
+	<appender name="loggerWarn" class="LoggerAppenderDailyFile"
+		threshold="WARN">
+		<layout class="LoggerLayoutTTCC" />
+		<param name="file" value="D:/Documents/Mis Webs/viajes_mvc/logs/file-%s-warn.log" />
+		<param name="datePattern" value="Y-m-d" />
+	</appender>
+
+	<appender name="loggerError" class="LoggerAppenderDailyFile"
+		threshold="ERROR">
+		<layout class="LoggerLayoutTTCC" />
+		<param name="file" value="D:/Documents/Mis Webs/viajes_mvc/logs/file-%s-error.log" />
+		<param name="datePattern" value="Y-m-d" />
+	</appender>
+
+	<appender name="loggerErrorMail" class="LoggerAppenderMailEvent"
+		threshold="TRACE">
+		<layout class="LoggerLayoutTTCC" />
+		<param name="to" value="marcosp@presi.unlp.edu.ar" />
+		<param name="from" value="marcosp@presi.unlp.edu.ar" />
+	</appender>
+
+	<root>
+		<appender_ref ref="loggerDebug" />
+		<appender_ref ref="loggerInfo" />
+		<appender_ref ref="loggerError" />
+		<appender_ref ref="loggerWarn" />
+	</root>
+
+</configuration>
