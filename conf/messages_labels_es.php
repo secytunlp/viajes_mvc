@@ -222,7 +222,13 @@ define('CYT_LBL_CAMBIO_A_CURRICULUM_SIGLA', 'AR', true);
 define('CYT_LBL_CAMBIO_MAIL_SUBJECT', 'Cambio en Solicitud de Subsidios para Viajes y/o Estadías (Julio $1 - Junio $2)', true);
 
 //rendicion
-
+define('CYT_LBL_RENDICION', 'Rendicion', true);
+define('CYT_LBL_RENDICION_A_INFORME', 'Informe tecnico', true);
+define('CYT_LBL_RENDICION_A_INFORME_SIGLA', 'IT', true);
+define('CYT_LBL_RENDICION_A_CERTIFICADO', 'Certificado de actividad', true);
+define('CYT_LBL_RENDICION_A_CERTIFICADO_SIGLA', 'CERT', true);
+define('CYT_LBL_RENDICION_A_RENDICION', 'Rendicion', true);
+define('CYT_LBL_RENDICION_A_RENDICION_SIGLA', 'REND', true);
 define('CYT_LBL_RENDICION_MAIL_SUBJECT', 'Rendición en Solicitud de Subsidios para Viajes y/o Estadías (Julio $1 - Junio $2)', true);
 
 ?>

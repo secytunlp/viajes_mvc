@@ -2739,3 +2739,57 @@ INSERT INTO eventomaximo VALUES (50, null, 18, 2, 30, 0);
 INSERT INTO eventomaximo VALUES (50, null, 7, 2, 30, 2);
 INSERT INTO eventomaximo VALUES (50, null, 12, 6, 30, 6);
 INSERT INTO eventomaximo VALUES (50, null, 13, 2, 30, 2);
+
+############################################ 28/09/2021 #####################################################
+CREATE TABLE rendicionviajes (
+  cd_rendicion int(11) NOT NULL AUTO_INCREMENT,
+  cd_solicitud int(11) NOT NULL,
+
+  dt_fecha timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  ds_informe varchar(255) DEFAULT NULL,
+  ds_rendicion varchar(255) DEFAULT NULL,
+  ds_certificado varchar(255) DEFAULT NULL,
+
+  ds_observacion text,
+
+  PRIMARY KEY (cd_rendicion),
+  KEY cd_solicitud (cd_solicitud)
+
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
+
+ALTER TABLE rendicionviajes ADD FOREIGN KEY ( cd_solicitud ) REFERENCES solicitud (
+cd_solicitud
+);
+
+
+
+
+
+CREATE TABLE cyt_rendicion_estado (
+  oid bigint(20) NOT NULL auto_increment,
+  rendicion_oid int(11) default NULL,
+  estado_oid int(11) default NULL,
+  fechaDesde datetime default NULL,
+  fechaHasta datetime default NULL,
+  motivo text default NULL,
+  user_oid int(11) NOT NULL,
+  fechaUltModificacion timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  PRIMARY KEY  (oid),
+  KEY rendicion_oid (rendicion_oid),
+  KEY estado_oid (estado_oid),
+  KEY user_oid (user_oid)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
+
+ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( rendicion_oid ) REFERENCES rendicionviajes (
+cd_rendicion
+);
+
+ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( estado_oid ) REFERENCES estado (
+cd_estado
+);
+
+ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( user_oid ) REFERENCES cyt_user (
+oid
+);
+
+
