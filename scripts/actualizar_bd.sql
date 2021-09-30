@@ -1,14 +1,14 @@
-SET GLOBAL innodb_file_format=Barracuda; SET GLOBAL innodb_file_per_table=ON; 
+SET GLOBAL innodb_file_format=Barracuda; SET GLOBAL innodb_file_per_table=ON;
 ALTER TABLE solicitud ENGINE=InnoDB ROW_FORMAT=COMPRESSED KEY_BLOCK_SIZE=8;
 
 ALTER TABLE `estado` ENGINE=InnoDB;
 
-CREATE TABLE cyt_solicitud_estado ( oid bigint(20) NOT NULL auto_increment, 
-solicitud_oid int(11) default NULL, estado_oid int(11) default NULL, fechaDesde 
-datetime default NULL, fechaHasta datetime default NULL, motivo text default 
-NULL, user_oid int(11) NOT NULL, fechaUltModificacion timestamp NOT NULL default 
-CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, PRIMARY KEY  (oid), KEY 
-solicitud_oid (solicitud_oid), KEY estado_oid (estado_oid), KEY user_oid 
+CREATE TABLE cyt_solicitud_estado ( oid bigint(20) NOT NULL auto_increment,
+solicitud_oid int(11) default NULL, estado_oid int(11) default NULL, fechaDesde
+datetime default NULL, fechaHasta datetime default NULL, motivo text default
+NULL, user_oid int(11) NOT NULL, fechaUltModificacion timestamp NOT NULL default
+CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, PRIMARY KEY  (oid), KEY
+solicitud_oid (solicitud_oid), KEY estado_oid (estado_oid), KEY user_oid
 (user_oid) ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
 ALTER TABLE cyt_solicitud_estado ADD FOREIGN KEY ( solicitud_oid ) REFERENCES solicitud (
@@ -33,7 +33,7 @@ INSERT INTO cdt_action_function VALUES (NULL, 65, 'cambiarEstadoSolicitud');
 INSERT INTO cdt_function VALUES (NULL, 'Ver puntaje/diferencia');
 
 INSERT INTO cdt_action_function VALUES (NULL, 66, 'view_puntaje');
- 
+
 CREATE TABLE cyt_solicitud_proyecto (
   oid bigint(20) NOT NULL auto_increment,
   solicitud_oid int(11) default NULL,
@@ -89,18 +89,18 @@ INSERT INTO cdt_action_function VALUES (NULL, 65, 'cambiarEstadoEvaluacion');
 
 INSERT INTO cdt_function VALUES (NULL, 'Ver anteriores');
 
-INSERT INTO cdt_action_function VALUES (NULL, 67, 'view_anteriores'); 
+INSERT INTO cdt_action_function VALUES (NULL, 67, 'view_anteriores');
 
 ALTER TABLE `motivo`
 	ENGINE=InnoDB;
-	
+
 DELETE
 FROM ambito
 WHERE not exists (SELECT solicitud.cd_solicitud FROM solicitud WHERE solicitud.cd_solicitud =  ambito.cd_solicitud);
 
 ALTER TABLE `ambito`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE ambito ADD FOREIGN KEY ( cd_solicitud ) REFERENCES solicitud (
 cd_solicitud
 );
@@ -118,17 +118,17 @@ cd_solicitud
 
 ALTER TABLE `monto`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE monto ADD FOREIGN KEY ( cd_solicitud ) REFERENCES solicitud (
 cd_solicitud
 );
 
 ALTER TABLE `tipopresupuesto`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE `presupuesto`
 	ENGINE=InnoDB;
-	
+
 DELETE
 FROM presupuesto
 WHERE not exists (SELECT solicitud.cd_solicitud FROM solicitud WHERE solicitud.cd_solicitud =  presupuesto.cd_solicitud);
@@ -143,10 +143,10 @@ cd_tipopresupuesto
 
 ALTER TABLE `tipoinvestigador`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE `modeloplanilla`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE modeloplanilla ADD FOREIGN KEY ( cd_motivo ) REFERENCES motivo (
 cd_motivo
 );
@@ -157,14 +157,14 @@ cd_tipoinvestigador
 
 ALTER TABLE `planmaximo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE planmaximo ADD FOREIGN KEY ( cd_modeloplanilla ) REFERENCES modeloplanilla (
 cd_modeloplanilla
 );
 
 ALTER TABLE `puntajeplan`
 	ENGINE=InnoDB;
-	
+
 DELETE
 FROM puntajeplan
 WHERE not exists (SELECT modeloplanilla.cd_modeloplanilla FROM modeloplanilla WHERE modeloplanilla.cd_modeloplanilla =  puntajeplan.cd_modeloplanilla);
@@ -179,7 +179,7 @@ cd_evaluacion
 
 ALTER TABLE `categoriamaximo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE categoriamaximo ADD FOREIGN KEY ( cd_modeloplanilla ) REFERENCES modeloplanilla (
 cd_modeloplanilla
 );
@@ -190,7 +190,7 @@ cd_categoria
 
 ALTER TABLE `puntajecategoria`
 	ENGINE=InnoDB;
-	
+
 DELETE
 FROM puntajecategoria
 WHERE not exists (SELECT modeloplanilla.cd_modeloplanilla FROM modeloplanilla WHERE modeloplanilla.cd_modeloplanilla =  puntajecategoria.cd_modeloplanilla);
@@ -214,7 +214,7 @@ ALTER TABLE `cargoplanilla`
 
 ALTER TABLE `cargomaximo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE cargomaximo ADD FOREIGN KEY ( cd_modeloplanilla ) REFERENCES modeloplanilla (
 cd_modeloplanilla
 );
@@ -225,7 +225,7 @@ cd_cargoplanilla
 
 ALTER TABLE `puntajecargo`
 	ENGINE=InnoDB;
-	
+
 DELETE
 FROM puntajecargo
 WHERE not exists (SELECT modeloplanilla.cd_modeloplanilla FROM modeloplanilla WHERE modeloplanilla.cd_modeloplanilla =  puntajecargo.cd_modeloplanilla);
@@ -249,10 +249,10 @@ ALTER TABLE `puntajegrupo`
 
 ALTER TABLE `itemplanilla`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE `itemmaximo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE itemmaximo ADD FOREIGN KEY ( cd_modeloplanilla ) REFERENCES modeloplanilla (
 cd_modeloplanilla
 );
@@ -267,10 +267,10 @@ cd_puntajegrupo
 
 ALTER TABLE `eventoplanilla`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE `eventomaximo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE eventomaximo ADD FOREIGN KEY ( cd_modeloplanilla ) REFERENCES modeloplanilla (
 cd_modeloplanilla
 );
@@ -285,23 +285,23 @@ cd_puntajegrupo
 
 ALTER TABLE `universidad`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE `titulo`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE titulo ADD FOREIGN KEY ( cd_universidad ) REFERENCES universidad (
 cd_universidad
 );
 
 ALTER TABLE `beca`
 	ENGINE=InnoDB;
-	
+
 ALTER TABLE beca ADD FOREIGN KEY ( cd_docente ) REFERENCES docente (
 cd_docente
 );
 
-SET GLOBAL innodb_file_format=Barracuda; 
-SET GLOBAL innodb_file_per_table=ON; 
+SET GLOBAL innodb_file_format=Barracuda;
+SET GLOBAL innodb_file_per_table=ON;
 ALTER TABLE solicitud ADD cd_titulogrado INT(11) NULL DEFAULT NULL;
 
 ALTER TABLE solicitud ADD FOREIGN KEY ( cd_titulogrado ) REFERENCES titulo (
@@ -310,19 +310,19 @@ cd_titulo
 
 ALTER TABLE `solicitud`
 	CHANGE COLUMN `dt_fecha` `dt_fecha` DATETIME NULL DEFAULT NULL ;
-	
+
 ALTER TABLE `cyt_solicitud_proyecto`
 	ADD UNIQUE INDEX `solicitud_oid_proyecto_oid` (`solicitud_oid`, `proyecto_oid`);
-	
+
 INSERT INTO cdt_function VALUES (NULL, 'Enviar solicitud');
-INSERT INTO cdt_action_function VALUES (NULL, 68, 'send_solicitud'); 
+INSERT INTO cdt_action_function VALUES (NULL, 68, 'send_solicitud');
 
 INSERT INTO cdt_function VALUES (NULL, 'Admitir solicitud');
-INSERT INTO cdt_action_function VALUES (NULL, 69, 'admit_solicitud'); 
+INSERT INTO cdt_action_function VALUES (NULL, 69, 'admit_solicitud');
 
 INSERT INTO cdt_function VALUES (NULL, 'Rechazar solicitud');
-INSERT INTO cdt_action_function VALUES (NULL, 70, 'deny_solicitud'); 
-INSERT INTO cdt_action_function VALUES (NULL, 70, 'deny_solicitud_init'); 
+INSERT INTO cdt_action_function VALUES (NULL, 70, 'deny_solicitud');
+INSERT INTO cdt_action_function VALUES (NULL, 70, 'deny_solicitud_init');
 
 ######################################## 27/11/2014 ###################################################
 CREATE TABLE IF NOT EXISTS cyt_solicitud_no_rendidas (
@@ -681,15 +681,15 @@ INSERT INTO `unidadaprobadaviajes` (`cd_unidad`, `cd_periodo`) VALUES
 CREATE TABLE cambioviajes (
   cd_cambio int(11) NOT NULL AUTO_INCREMENT,
   cd_solicitud int(11) NOT NULL,
-  
+
   dt_fecha timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   ds_archivo varchar(255) DEFAULT NULL,
-  
+
   ds_observacion text,
-  
+
   PRIMARY KEY (cd_cambio),
   KEY cd_solicitud (cd_solicitud)
-  
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
 ALTER TABLE cambioviajes ADD FOREIGN KEY ( cd_solicitud ) REFERENCES solicitud (
@@ -919,16 +919,16 @@ INSERT INTO `unidadaprobadaviajes` (`cd_unidad`, `cd_periodo`) VALUES
 CREATE TABLE cyt_rendicionviajes (
   oid int(11) NOT NULL AUTO_INCREMENT,
   solicitud_oid int(11) NOT NULL,
-  
+
   fecha timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   rendicion varchar(255) DEFAULT NULL,
   informe varchar(255) DEFAULT NULL,
   constancia varchar(255) DEFAULT NULL,
   observaciones text,
-  
+
   PRIMARY KEY (oid),
   KEY cd_solicitud (solicitud_oid)
-  
+
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
 ALTER TABLE cyt_rendicionviajes ADD FOREIGN KEY ( solicitud_oid ) REFERENCES solicitud (
@@ -1251,7 +1251,7 @@ INSERT INTO cargomaximo VALUES (35, null, 8, 1);
 INSERT INTO cargomaximo VALUES (35, null, 9, 1);
 INSERT INTO cargomaximo VALUES (35, null, 10, 0);
 
-ALTER TABLE `itemplanilla` CHANGE `ds_itemplanilla` `ds_itemplanilla` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL 
+ALTER TABLE `itemplanilla` CHANGE `ds_itemplanilla` `ds_itemplanilla` VARCHAR( 255 ) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL
 
 INSERT INTO `itemplanilla` (`cd_itemplanilla`, `ds_itemplanilla`, `nu_orden`) VALUES (18, 'Con t�tulo de propiedad intelectual: -Patentes', '7');
 INSERT INTO `itemplanilla` (`cd_itemplanilla`, `ds_itemplanilla`, `nu_orden`) VALUES (19, 'Con t�tulo de propiedad intelectual: -Modelo de utilidad -Derecho de obtentor (Variedades vegetales) -Derecho de autor de producciones tecnol�gicas -Modelo industrial -Dise�o industrial, Marca de servicios o producto', '8');
@@ -1565,7 +1565,7 @@ ALTER TABLE `beca`
 
 
 ALTER TABLE `solicitud`
-	
+
 	ADD COLUMN `ds_justificacionB` TEXT NULL DEFAULT NULL;
 
 #######################################################16/02/2018########################################################################3
@@ -1971,7 +1971,7 @@ INSERT INTO eventomaximo VALUES (40, null, 13, 2, 30, 2);
 
 ALTER TABLE `solicitud`
 	ADD COLUMN `ds_googleScholar` VARCHAR(255) NULL AFTER `ds_justificacionB`;
-	
+
 UPDATE `motivo` SET `ds_motivo`='A) Reuniones Científicas:' WHERE  `cd_motivo`=1;
 
 
@@ -2741,9 +2741,9 @@ INSERT INTO eventomaximo VALUES (50, null, 12, 6, 30, 6);
 INSERT INTO eventomaximo VALUES (50, null, 13, 2, 30, 2);
 
 ############################################ 28/09/2021 #####################################################
-CREATE TABLE rendicionviajes (
-  cd_rendicion int(11) NOT NULL AUTO_INCREMENT,
-  cd_solicitud int(11) NOT NULL,
+CREATE TABLE cyt_rendicionviajes (
+  oid int(11) NOT NULL AUTO_INCREMENT,
+  solicitud_oid int(11) NOT NULL,
 
   dt_fecha timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
   ds_informe varchar(255) DEFAULT NULL,
@@ -2752,20 +2752,19 @@ CREATE TABLE rendicionviajes (
 
   ds_observacion text,
 
-  PRIMARY KEY (cd_rendicion),
-  KEY cd_solicitud (cd_solicitud)
+  PRIMARY KEY (oid),
+  KEY solicitud_oid (solicitud_oid)
 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
-ALTER TABLE rendicionviajes ADD FOREIGN KEY ( cd_solicitud ) REFERENCES solicitud (
-cd_solicitud
-);
+ALTER TABLE `cyt_rendicionviajes`
+    ADD UNIQUE INDEX `solicitud_oid_unique` (`solicitud_oid`);
 
 
 
 
 
-CREATE TABLE cyt_rendicion_estado (
+CREATE TABLE cyt_rendicionviajes_estado (
   oid bigint(20) NOT NULL auto_increment,
   rendicion_oid int(11) default NULL,
   estado_oid int(11) default NULL,
@@ -2780,15 +2779,15 @@ CREATE TABLE cyt_rendicion_estado (
   KEY user_oid (user_oid)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=0 ;
 
-ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( rendicion_oid ) REFERENCES rendicionviajes (
-cd_rendicion
+ALTER TABLE cyt_rendicionviajes_estado ADD FOREIGN KEY ( rendicion_oid ) REFERENCES cyt_rendicionviajes (
+oid
 );
 
-ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( estado_oid ) REFERENCES estado (
+ALTER TABLE cyt_rendicionviajes_estado ADD FOREIGN KEY ( estado_oid ) REFERENCES estado (
 cd_estado
 );
 
-ALTER TABLE cyt_rendicion_estado ADD FOREIGN KEY ( user_oid ) REFERENCES cyt_user (
+ALTER TABLE cyt_rendicionviajes_estado ADD FOREIGN KEY ( user_oid ) REFERENCES cyt_user (
 oid
 );
 

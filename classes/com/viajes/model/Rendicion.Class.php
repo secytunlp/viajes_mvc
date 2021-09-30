@@ -10,20 +10,20 @@
 class Rendicion extends Entity{
 
 	//variables de instancia.
-	
+
 	private $ds_investigador;
 	private $nu_cuil;
 
 	private $estado;
-	
+
 	private $solicitud;
-	
+
 	private $ds_rendicion;
 
     /**
      * @return string
      */
-    public function getDsRendicion()
+    public function getDs_Rendicion()
     {
         return $this->ds_rendicion;
     }
@@ -31,7 +31,7 @@ class Rendicion extends Entity{
     /**
      * @param string $ds_rendicion
      */
-    public function setDsRendicion($ds_rendicion)
+    public function setDs_rendicion($ds_rendicion)
     {
         $this->ds_rendicion = $ds_rendicion;
     }
@@ -39,7 +39,7 @@ class Rendicion extends Entity{
     /**
      * @return string
      */
-    public function getDsInforme()
+    public function getDs_informe()
     {
         return $this->ds_informe;
     }
@@ -47,7 +47,7 @@ class Rendicion extends Entity{
     /**
      * @param string $ds_informe
      */
-    public function setDsInforme($ds_informe)
+    public function setDs_informe($ds_informe)
     {
         $this->ds_informe = $ds_informe;
     }
@@ -55,7 +55,7 @@ class Rendicion extends Entity{
     /**
      * @return string
      */
-    public function getDsCertificado()
+    public function getDs_certificado()
     {
         return $this->ds_certificado;
     }
@@ -63,7 +63,7 @@ class Rendicion extends Entity{
     /**
      * @param string $ds_certificado
      */
-    public function setDsCertificado($ds_certificado)
+    public function setDs_certificado($ds_certificado)
     {
         $this->ds_certificado = $ds_certificado;
     }
@@ -71,51 +71,69 @@ class Rendicion extends Entity{
     private $ds_informe;
 
     private $ds_certificado;
-	
-	  private $dt_fecha;
-	 
 
-	 
+	  private $dt_fecha;
+
+
+
 	  private $ds_observacion;
-	  
-	
+
+
+    private $motivo_oid;
+
+    /**
+     * @return mixed
+     */
+    public function getMotivo_oid()
+    {
+        return $this->motivo_oid;
+    }
+
+    /**
+     * @param mixed $motivo_oid
+     */
+    public function setMotivo_oid($motivo_oid)
+    {
+        $this->motivo_oid = $motivo_oid;
+    }
+
 	public function __construct(){
-		 
+
 			$this->ds_investigador = '';
-		   
+
 		   $this->nu_cuil = '';
-		
+
 		  $this->solicitud = new Solicitud();
-		  
-		 
-		  
+
+
+
 		   $this->ds_informe = '';
 
         $this->ds_certificado = '';
 
         $this->ds_rendicion = '';
-		   
-		  
-		  $this->dt_fecha = '';
-		  
 
-		  
+
+		  $this->dt_fecha = '';
+
+
+
 		  $this->ds_observacion = '';
-		  
+
 	}
 
 
 
 
-	
 
-    
+
+
 	public function __toString(){
-		
+
 		return "";
 	}
 
-	
+
 
 	public function getEstado()
 	{

@@ -1,0 +1,262 @@
+<!-- BEGIN: main -->
+
+<style>
+
+</style>
+<script type="text/javascript">
+
+
+
+
+$(function() {
+
+	$( "#tabs" ).tabs();
+});
+
+
+
+$(function() {
+
+        $("#{form_id}").submit(function(e) {
+
+        	if( $("#{form_id}_input_submit").length > 0){
+        		$submit = $("#{form_id}_input_submit");
+            	$restoreOpacity = $submit.css("opacity");
+        	}
+
+
+        	 e.preventDefault();
+
+        	 if( {useAjaxSubmit} ) {
+
+                	submitAjaxForm('{form_id}', '{action}', {onSuccessCallback},{beforeSubmit});
+
+                	return false;
+             }else{
+
+
+         		$submit.css({"opacity":$restoreOpacity});
+         		$submit.removeAttr( "disabled" );
+             }
+
+
+
+        });
+
+
+});
+
+function uploadAjax(file, action, name){
+	var file = file.files[0];
+	var data = new FormData();
+	var $submit_ajax = $("#{form_id}_input_submit_ajax");
+	var $restoreOpacity = $submit_ajax.css("opacity");
+	data.append(name,file);
+	 $.ajax({
+	            url:action,
+	            type:'POST',
+	            contentType:false,
+	            data:data,
+	            processData:false,
+	            cache:false,
+	            beforeSend: function(){
+					$submit_ajax.css({opacity:0.5});
+					$submit_ajax.attr("disabled", "disabled");
+					$("#"+name+"_cargado").html("");
+				  },
+				  complete: function(){
+				  },
+				  error: function(){
+
+					 	$submit_ajax.css({"opacity":$restoreOpacity});
+					 	$submit_ajax.removeAttr( "disabled" )
+					  },
+				  success: function(content){
+
+
+					$submit_ajax.css({"opacity":$restoreOpacity});
+					$submit_ajax.removeAttr( "disabled" );
+
+
+
+				  }
+
+
+	 }).done(function(msg){
+		    $("#"+name+"_cargado").append(msg); //Mostrara los archivos cargados en el div con el id "Cargados"
+	  });
+	}
+
+
+function successDefault_{form_id}(data ){
+
+	try {
+
+		 jsondata = $.parseJSON(data);
+
+		 if( jsondata != null && jsondata["error"]!=null){
+				showMessageError( jsondata["error"], false );
+			}
+
+		 if( jsondata != null && jsondata["info"]!=null){
+				//showMessageInfo( jsondata["info"], false );
+				//$('#{form_id}').reset();
+				{onCancel};
+
+			}
+	} catch (e) {
+	   return;
+	}
+
+
+}
+
+
+
+</script>
+
+<form <!-- BEGIN: property --> {name}="{value}" <!-- END: property --> >
+<a name="ancla" id="ancla"></a>
+	<!-- BEGIN: fieldset -->
+		<fieldset>
+	    <!-- BEGIN: legend -->
+		<legend>{value}</legend>
+		<!-- END: legend -->
+
+		<table width="100%">
+			<tr>
+				<!-- BEGIN:column -->
+				<td>
+					<!-- BEGIN: ds_investigador -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: ds_investigador -->
+					<!-- BEGIN: nu_cuil -->
+					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+					    <!-- BEGIN: label -->
+					    <label for="{input_name}">{value} {required}:</label>
+					    <!-- END: label -->
+					    <!-- BEGIN: input -->
+					    {input}
+					    <!-- END: input -->
+					</div>
+					<!-- END: nu_cuil -->
+
+				</td>
+				<!-- END:column -->
+			</tr>
+		</table>
+        </fieldset>
+<!-- END: fieldset -->
+<fieldset>
+
+
+
+
+
+
+            <!-- BEGIN: ds_rendicion -->
+
+            <div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_rendicion">
+
+                <!-- BEGIN: label -->
+                <label for="ds_rendicion">{value} {required}:</label>
+                <!-- END: label -->
+                <!-- BEGIN: input -->
+                <input id="ds_rendicion" type="file" value="" size="32" name="ds_rendicion" onChange="uploadAjax(this,'{actionFile}','ds_rendicion')" {rendicion_requerido}>
+                <!-- END: input -->
+                <span id="ds_rendicion_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_rendicion_cargado}
+						</span>
+                <div style="color:#A43B3B; font-weight:bold">{label_rendicion}</div>
+            </div>
+            <!-- END: ds_rendicion -->
+            <!-- BEGIN: ds_informe -->
+
+            <div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_informe">
+
+                <!-- BEGIN: label -->
+                <label for="ds_informe">{value} {required}:</label>
+                <!-- END: label -->
+                <!-- BEGIN: input -->
+                <input id="ds_informe" type="file" value="" size="32" name="ds_informe" onChange="uploadAjax(this,'{actionFile}','ds_informe')">
+                <!-- END: input -->
+                <span id="ds_informe_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_informe_cargado}
+						</span>
+                <div style="color:#A43B3B; font-weight:bold">{label_informe}</div>
+            </div>
+            <!-- END: ds_informe -->
+            <!-- BEGIN: ds_certificado -->
+
+            <div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_certificado">
+
+                <!-- BEGIN: label -->
+                <label for="ds_certificado">{value} {required}:</label>
+                <!-- END: label -->
+                <!-- BEGIN: input -->
+                <input id="ds_certificado" type="file" value="" size="32" name="ds_certificado" onChange="uploadAjax(this,'{actionFile}','ds_certificado')">
+                <!-- END: input -->
+                <span id="ds_certificado_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_certificado_cargado}
+						</span>
+                <div style="color:#A43B3B; font-weight:bold">{label_certificado}</div>
+            </div>
+            <!-- END: ds_certificado -->
+
+    <!-- BEGIN: ds_observacion -->
+    <div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+        <!-- BEGIN: label -->
+        <label for="{input_name}">{value}:</label>
+        <!-- END: label -->
+        <!-- BEGIN: input -->
+        {input}
+        <!-- END: input -->
+    </div>
+    <!-- END: ds_observacion -->
+</fieldset>
+
+	<!-- BEGIN: field_hidden -->
+	{input_hidden}
+	<!-- END: field_hidden -->
+
+
+</form>
+
+<!-- BEGIN: buttons -->
+<form id="buttons{inputId}">
+	<fieldset class="tblFooters">
+
+		<!-- BEGIN: submit -->
+		<input type="button" value="{lbl_submit}" id="{form_id}_input_submit" onclick="javascript:submitForm('{form_id}');">
+		<!-- END: submit -->
+
+		<!-- BEGIN: submit_ajax -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_submit_ajax" onclick="javascript: submitForm('{form_id}');">
+		<!-- END: submit_ajax -->
+
+		<!-- BEGIN: button -->
+		<input type="button" value="{lbl_button}" id="{form_id}_input_button_{i}" onclick="javascript: {function}; ">
+		<!-- END: button -->
+
+		<!-- BEGIN: cancel -->
+		<input type="button" value="{lbl_cancel}" id="{form_id}_input_cancel" onclick="javascript: {function};">
+		<!-- END: cancel -->
+
+		<div class="camposRequeridos">(*) {msg_required_fields}</div>
+	</fieldset>
+</form>
+<!-- END: buttons -->
+<!-- END: main -->

@@ -298,4 +298,22 @@ define('CYT_MSG_INTEGRANTE_CVPROFESOR_PROBLEMA', 'Hubo un error al subir el Curr
 define('CYT_MSG_INTEGRANTE_ACEPTACION_PROBLEMA', 'Hubo un error al subir la Aceptacion, intente nuevamente, si el problema persiste envíenos un mail a proyectos.secyt@presi.unlp.edu.ar', true);
 define('CYT_MSG_INTEGRANTE_INVITACIONGRUPO_PROBLEMA', 'Hubo un error al subir la invitacion, intente nuevamente, si el problema persiste envíenos un mail a proyectos.secyt@presi.unlp.edu.ar', true);
 
+
+
+/* RENDICIONES */
+
+define('CYT_MSG_RENDICION_TITLE_LIST', 'Rendiciones', true);
+define('CYT_MSG_RENDICION_TITLE_ADD', 'Agregar ' . CYT_LBL_RENDICION, true);
+define('CYT_MSG_RENDICION_TITLE_UPDATE', 'Modificar ' . CYT_LBL_RENDICION , true);
+define('CYT_MSG_RENDICION_TITLE_VIEW', 'Visualizar ' . CYT_LBL_RENDICION , true);
+define('CYT_MSG_RENDICION_TITLE_DELETE', 'Borrar ' . CYT_LBL_RENDICION , true);
+
+define('CYT_MSG_RENDICION_ELIMINAR_PROHIBIDO', 'Sólo se pueden eliminar los rendiciones con estado CREADA', true);
+define('CYT_MSG_RENDICION_MODIFICAR_PROHIBIDO', 'Sólo se pueden modificar los rendiciones con estado CREADA', true);
+define('CYT_MSG_RENDICION_ENVIAR_PROHIBIDO', 'Sólo se pueden enviar los rendiciones con estado CREADA', true);
+define('CYT_MSG_RENDICION_ENVIAR_PREGUNTA', '¿Enviar la rendicion?', true);
+
+define('CYT_MSG_RENDICION_PDF_TITLE', 'VISUALIZAR RENDICION', true);
+define('CYT_MSG_RENDICION_ARCHIVO_NOMBRE', 'RENDICION_', true);
+
 ?>

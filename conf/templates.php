@@ -28,4 +28,5 @@ define('CYT_TEMPLATE_CAMBIO_FORM',  CYT_PATH . 'view/templates/cambios/form_colu
 define('CYT_TEMPLATE_CAMBIO_EDIT_CAMBIO_RELACIONES', CYT_PATH . 'view/templates/cambios/cambio_relaciones_forms.html');
 define('CYT_TEMPLATE_CAMBIO_EDIT_AMBITOS', CYT_PATH . 'view/templates/cambios/edit_ambitos.html');
 define('CYT_TEMPLATE_CAMBIO_EDIT_PRESUPUESTOS', CYT_PATH . 'view/templates/cambios/edit_presupuestos.html');
+define('CYT_TEMPLATE_RENDICION_FORM',  CYT_PATH . 'view/templates/rendiciones/form_columns.htm' );
 ?>
