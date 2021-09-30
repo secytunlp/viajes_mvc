@@ -35,10 +35,34 @@ class AddRendicionInitAction extends EditEntityInitAction {
 		$filter = new CMPRendicionFilter();
 		$filter->fillSavedProperties();
 
-		//CYTSecureUtils::logObject($filter->getSolicitud());
+        $oCriteria = new CdtSearchCriteria();
+
+        $oCriteria->addFilter("solicitud_oid", $filter->getSolicitud()->getOid(), '=');
+
+
+
+        $oRendicionManager =  ManagerFactory::getRendicionManager();
+        $oRendicionAux = $oRendicionManager->getEntity($oCriteria);
+
+        if(!empty($oRendicionAux)){
+            throw new GenericException( CYT_MSG_RENDICION_CREADA );
+        }
 
 		$oSolicitudManager =  ManagerFactory::getSolicitudManager();
 		$oSolicitud = $oSolicitudManager->getObjectByCode($filter->getSolicitud()->getOid());
+
+
+        $oCriteria = new CdtSearchCriteria();
+        $oCriteria->addFilter('solicitud_oid', $oSolicitud->getOid(), '=');
+        $oCriteria->addNull('fechaHasta');
+        $managerSolicitudEstado =  CYTSecureManagerFactory::getSolicitudEstadoManager();
+        $oSolicitudEstado = $managerSolicitudEstado->getEntity($oCriteria);
+
+        if (($oSolicitudEstado->getEstado()->getOid()!=CYT_ESTADO_SOLICITUD_OTORGADA)) {
+
+            throw new GenericException( CYT_MSG_RENDICIONES_PROHIBIDO_AGREGAR);
+        }
+
 
 		$oDocenteManager =  CYTSecureManagerFactory::getDocenteManager();
 		$oDocente = $oDocenteManager->getObjectByCode($oSolicitud->getDocente()->getOid());

@@ -28,22 +28,22 @@ class UpdateRendicionAction extends UpdateEntityAction{
 		if (!file_exists($dir)) mkdir($dir, 0777);
 		$dir .= PATH_RENDICIONES.'/';
 		if (!file_exists($dir)) mkdir($dir, 0777);
-		$entity->setFecha(date(DB_DEFAULT_DATETIME_FORMAT));
+		$entity->setDt_fecha(date(DB_DEFAULT_DATETIME_FORMAT));
 		if(isset($_SESSION['archivos'])){
 			$archivos = unserialize( $_SESSION['archivos'] );
 			
 			foreach ($archivos as $key => $archivo) {
 				//CdtUtils::log("FILE: "   . $key.' - '.$archivo['name']);
 				switch ($key) {
-            		case 'rendicion':
+            		case 'ds_rendicion':
             		$nombre = CYT_LBL_RENDICION_RENDICION;
             		$sigla = CYT_LBL_RENDICION_RENDICION_SIGLA;
             		break;
-            		case 'informe':
+            		case 'ds_informe':
             		$nombre = CYT_LBL_RENDICION_INFORME;
             		$sigla = CYT_LBL_RENDICION_INFORME_SIGLA;
             		break;
-            		case 'constancia':
+            		case 'ds_certificado':
             		$nombre = CYT_LBL_RENDICION_CONSTANCIA;
             		$sigla = CYT_LBL_RENDICION_CONSTANCIA_SIGLA;
             		break;

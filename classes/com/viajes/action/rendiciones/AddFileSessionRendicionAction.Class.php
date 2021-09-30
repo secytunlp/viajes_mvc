@@ -51,7 +51,7 @@ class AddFileSessionRendicionAction extends CdtAction{
 					if (!file_exists($dir)) mkdir($dir, 0777);
 					/*$oUser = CdtSecureUtils::getUserLogged();
             		$separarCUIL = explode('-',trim($oUser->getDs_username()));*/
-					$dir .= $oSolicitud->getDocente()->getNu_documento().'/';
+					$dir .= str_pad($oSolicitud->getDocente()->getNu_documento(), 8, "0", STR_PAD_LEFT).'/';
 					if (!file_exists($dir)) mkdir($dir, 0777);
 					$dir .= PATH_RENDICIONES.'/';
 					if (!file_exists($dir)) mkdir($dir, 0777);

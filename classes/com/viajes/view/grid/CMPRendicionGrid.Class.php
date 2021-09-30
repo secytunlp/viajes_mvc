@@ -23,7 +23,7 @@ class CMPRendicionGrid extends CMPEntityGrid{
 			$solicitud->setOid($solicitud_oid);
 			$filter->setSolicitud( $solicitud );
 			$filter->saveProperties();
-			$oCriteria = new CdtSearchCriteria();
+			/*$oCriteria = new CdtSearchCriteria();
 			$oCriteria->addFilter('solicitud_oid', $solicitud_oid, '=');
 			$oCriteria->addNull('fechaHasta');
 			$managerSolicitudEstado =  CYTSecureManagerFactory::getSolicitudEstadoManager();
@@ -31,7 +31,7 @@ class CMPRendicionGrid extends CMPEntityGrid{
 			if (($oSolicitudEstado->getEstado()->getOid()!=CYT_ESTADO_SOLICITUD_OTORGADA)) {
 
 				throw new GenericException( CYT_MSG_RENDICIONES_PROHIBIDO_AGREGAR);
-			}
+			}*/
 		}
 		$this->setFilter( $filter );
 		$this->setLayout( new CdtLayoutBasicAjax() );

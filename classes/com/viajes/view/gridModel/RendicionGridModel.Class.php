@@ -63,11 +63,25 @@ class RendicionGridModel extends GridModel {
 		//return $this->getDefaultRowActions($item, "evaluacion", CYT_LBL_EVALUACION, true, true, true, false, 500, 750);
 		$actions = new ItemCollection();
 
-        $action = $this->buildRowAction( "update_rendicion_init", "update_rendicion_init", CDT_CMP_GRID_MSG_EDIT . " ".CYT_LBL_RENDICION, CDT_UI_IMG_EDIT, "edit") ;
-        $actions->addItem( $action );
+		$oUser = CdtSecureUtils::getUserLogged();
+        if (CdtSecureUtils::hasPermission ( $oUser, CYT_FUNCTION_ENVIAR_SOLICITUD )) {
+			$action = $this->buildRowAction("update_rendicion_init", "update_rendicion_init", CDT_CMP_GRID_MSG_EDIT . " " . CYT_LBL_RENDICION, CDT_UI_IMG_EDIT, "edit");
+			$actions->addItem($action);
 
-		$action =  $this->buildDeleteAction( $item, "rendicion", CYT_LBL_RENDICION, $this->getMsgConfirmDelete( $item ), false ) ;
-		$actions->addItem( $action );
+
+			$action =  $this->buildDeleteAction( $item, "rendicion", CYT_LBL_RENDICION, $this->getMsgConfirmDelete( $item ), false ) ;
+			$actions->addItem( $action );
+		}
+
+		if (CdtSecureUtils::hasPermission ( $oUser, CYT_FUNCTION_ADMITIR_SOLICITUD )) {
+			$action =  $this->buildRowAction( "admit_rendicion", "admit_rendicion", CYT_LBL_ADMITIR, CDT_UI_IMG_SEARCH, "view", "delete_items('admit_rendicion')", true, $this->getMsgConfirmAdmit()) ;
+			$actions->addItem( $action );
+		}
+
+		if (CdtSecureUtils::hasPermission ( $oUser, CYT_FUNCTION_RECHAZAR_SOLICITUD )) {
+			$action =  $this->buildRowAction( "deny_rendicion_init", "deny_rendicion_init", CYT_LBL_RECHAZAR, CDT_UI_IMG_SEARCH, "view") ;
+			$actions->addItem( $action );
+		}
 
 		$action = $this->buildRowAction( "view_rendicion_pdf", "view_rendicion_pdf", CDT_UI_LBL_EXPORT_PDF, CDT_UI_IMG_SEARCH, "view") ;
 		$action->setBl_targetblank(true);
@@ -75,7 +89,7 @@ class RendicionGridModel extends GridModel {
 		/*$action = $this->buildRowAction( "update_rendicion_init", "update_rendicion_init", CDT_CMP_GRID_MSG_EDIT . " ".CYT_LBL_RENDICION, CDT_UI_IMG_EDIT, "edit") ;
 		$actions->addItem( $action );*/
 
-		$oUser = CdtSecureUtils::getUserLogged();
+
 
 		if (CdtSecureUtils::hasPermission ( $oUser, CYT_FUNCTION_ENVIAR_SOLICITUD )) {
 			$action =  $this->buildRowAction( "send_rendicion", "send_rendicion", CYT_LBL_ENVIAR, CDT_UI_IMG_SEARCH, "view", "delete_items('send_rendicion')", false, $this->getMsgConfirmSend(CYT_MSG_RENDICION_ENVIAR_PREGUNTA)) ;
@@ -97,6 +111,12 @@ class RendicionGridModel extends GridModel {
 
 	protected function getMsgConfirmSend( $msg ){
 
+		return CdtFormatUtils::quitarEnters($msg);
+	}
+
+	protected function getMsgConfirmAdmit(  ){
+
+		$msg = CYT_MSG_EVALUACION_ADMITIR_PREGUNTA;
 		return CdtFormatUtils::quitarEnters($msg);
 	}
 }

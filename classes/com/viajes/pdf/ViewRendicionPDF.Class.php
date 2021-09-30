@@ -81,7 +81,7 @@ class ViewRendicionPDF extends CdtPDFPrint{
 
 
 
-		$this->Cell ( $this->getMaxWidth(), 10, $this->encodeCharacters(CYT_MSG_SOLICITUD_PDF_HEADER_TITLE)." ".$this->getYear(), 'LRT',0,'R');
+		$this->Cell ( $this->getMaxWidth(), 10, $this->encodeCharacters(CYT_MSG_RENDICION_PDF_HEADER_TITLE)." ".$this->getYear(), 'LRT',0,'R');
 		$this->ln(5);
 
 		$this->SetFont ( 'Arial', '', 12 );

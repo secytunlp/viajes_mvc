@@ -79,7 +79,7 @@ class RendicionManager extends EntityManager{
      */
     public function update(Entity $entity) {
     	parent::update($entity);
-    	if ($entity->getLugarTrabajo()->getOid()) {
+    	/*if ($entity->getLugarTrabajo()->getOid()) {
     		$managerLugarTrabajo =  CYTSecureManagerFactory::getLugarTrabajoManager();
 	    	$oLugarTrabajo = $managerLugarTrabajo->getObjectByCode($entity->getLugarTrabajo()->getOid());
 			if (!empty($oLugarTrabajo)) {
@@ -87,7 +87,7 @@ class RendicionManager extends EntityManager{
 					$oLugarTrabajo->setDs_telefono($entity->getDs_telefono());
 					$managerLugarTrabajo->update($oLugarTrabajo);
 			}
-    	}
+    	}*/
 
 
 
@@ -222,7 +222,7 @@ class RendicionManager extends EntityManager{
 		$oSolicitud = $oSolicitudManager->getObjectByCode($oRendicion->getSolicitud()->getOid());
 
 
-		$this->validateOnSend($entity, $oSolicitud->getNu_monto());
+		$this->validateOnSend($entity, $oSolicitud->getMotivo()->getOid());
 		//armamos el pdf con la data necesaria.
 		$pdf = new ViewRendicionPDF();
 
@@ -262,8 +262,8 @@ class RendicionManager extends EntityManager{
 
     	($oSolicitud->getFacultadplanilla()->getOid() != CYT_FACULTAD_NO_DECLARADA)?$pdf->setDs_facultadplanilla($oSolicitud->getFacultadplanilla()->getDs_facultad()):$pdf->setDs_facultadplanilla(CYT_MSG_SOLICITUD_UNIVERSIDAD);;
 
-    	$presupuestosManager = new PresupuestoRendicionManager();
-		$pdf->setPresupuestos( $presupuestosManager->getEntities($oCriteria) );
+    	/*$presupuestosManager = new PresupuestoRendicionManager();
+		$pdf->setPresupuestos( $presupuestosManager->getEntities($oCriteria) );*/
 
 		$pdf->title = CYT_MSG_RENDICION_PDF_TITLE;
 		$pdf->SetFont('Arial','', 13);
@@ -344,19 +344,66 @@ class RendicionManager extends EntityManager{
 
 	}
 
-	protected function validateOnSend(Entity $entity, $monto=0){
+	protected function validateOnSend(Entity $entity, $motivo=''){
 
 		$error='';
 
 
-		$presupuestos = $entity->getPresupuestos();
+		/*$presupuestos = $entity->getPresupuestos();
     	$total = 0;
 		foreach ($presupuestos as $oPresupuesto) {
 			$total +=$oPresupuesto->getNu_montopresupuesto();
 		}
 		if ($monto!=$total) {
     		$error .= CYT_MSG_SOLICITUD_MONTO_DECLARAR.' '.CYTSecureUtils::formatMontoToView($monto).'<br>';
-    	}
+    	}*/
+
+		$dir = CYT_PATH_PDFS.'/';
+		if (!file_exists($dir)) mkdir($dir, 0777);
+		$dir .= CYT_PERIODO_YEAR.'/';
+		if (!file_exists($dir)) mkdir($dir, 0777);
+		$oUser = CdtSecureUtils::getUserLogged();
+		$separarCUIL = explode('-',trim($oUser->getDs_username()));
+		$dir .= $separarCUIL[1].'/';
+		$dir .= PATH_RENDICIONES.'/';
+		if (!file_exists($dir)) mkdir($dir, 0777);
+		$okInforme=0;
+		$okRendicion=0;
+		$okCertificado=0;
+
+		$handle=opendir($dir);
+		while ($archivo = readdir($handle))
+		{
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'Informe_')))
+			{
+				$okInforme=1;
+			}
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'Rendicion_')))
+			{
+				$okRendicion=1;
+			}
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'Constancia_')))
+			{
+				$okCertificado=1;
+			}
+
+		}
+
+		if (!$okRendicion){
+			$error .=CYT_MSG_RENDICION_RENDICION_PROBLEMA.'<br />';
+		}
+		if (!$okInforme){
+			$error .=CYT_MSG_RENDICION_INFORME_PROBLEMA.'<br />';
+		}
+
+		if ($motivo!=CYT_MOTIVO_C) {
+
+			if (!$okCertificado){
+				$error .=CYT_MSG_RENDICION_CONSTANCIA_PROBLEMA.'<br />';
+			}
+		}
+
+
 		if ($error) {
     		throw new GenericException( $error );
     	}
@@ -393,6 +440,73 @@ class RendicionManager extends EntityManager{
 		else
 			$managerRendicionEstado->add($oRendicionEstado);
 	 }
+
+	public function confirm(Entity $entity, $estado_oid, $motivo='') {
+
+		$oid = $entity->getOid();
+
+
+		$oRendicionManager = ManagerFactory::getRendicionManager();
+		$oRendicion = $oRendicionManager->getObjectByCode($oid);
+		$oEstado = new Estado();
+		$oEstado->setOid($estado_oid);
+		$this->cambiarEstado($oRendicion, $oEstado, $motivo);
+
+		$oSolicitudManager = ManagerFactory::getSolicitudManager();
+		$oSolicitud = $oSolicitudManager->getObjectByCode($oRendicion->getSolicitud()->getOid());
+
+		switch ($estado_oid) {
+			case CYT_ESTADO_SOLICITUD_ADMITIDA:
+				$ds_subjet = CYT_LBL_RENDICION_ADMISION;
+				$ds_comment = CYT_LBL_RENDICION_ADMISION_COMMENT;
+				$oEstado = new Estado();
+				$oEstado->setOid(CYT_ESTADO_SOLICITUD_RENDIDA);
+				$oSolicitudManager->cambiarEstado($oSolicitud, $oEstado, $motivo);
+				break;
+			case CYT_ESTADO_SOLICITUD_CREADA:
+				$ds_subjet = CYT_LBL_RENDICION_NO_ADMISION;
+				$ds_comment = '<strong>'.htmlspecialchars(CYT_LBL_RENDICION_NO_ADMISION_COMMENT).'</strong>: '.htmlspecialchars($motivo);
+				break;
+
+		}
+
+
+		$msg = $ds_subjet.CYT_LBL_RENDICION_MAIL_SUBJECT;
+
+		$oPeriodoManager =  CYTSecureManagerFactory::getPeriodoManager();
+		$oPeriodo = $oPeriodoManager->getObjectByCode($oSolicitud->getPeriodo()->getOid());
+
+		$year = $oPeriodo->getDs_periodo();
+		$yearP = $year+1;
+		$params = array ($year,$yearP );
+
+		$subjectMail = htmlspecialchars(CdtFormatUtils::formatMessage( $msg, $params ), ENT_QUOTES, "UTF-8");
+
+
+		$xtpl = new XTemplate( CYT_TEMPLATE_SOLICITUD_MAIL_ENVIAR );
+		$xtpl->assign ( 'img_logo', WEB_PATH.'css/images/image002.gif' );
+		$xtpl->assign('solicitud_titulo', $subjectMail);
+		$xtpl->assign('year_label', CYT_LBL_SOLICITUD_MAIL_YEAR);
+		$xtpl->assign('year', $oPeriodo->getDs_periodo());
+		$xtpl->assign('investigador_label', CYT_LBL_SOLICITUD_MAIL_INVESTIGADOR);
+		$xtpl->assign('investigador', htmlspecialchars($oSolicitud->getDocente()->getDs_apellido().', '.$oSolicitud->getDocente()->getDs_nombre(), ENT_QUOTES, "UTF-8"));
+		$xtpl->assign('motivo_label', CYT_LBL_SOLICITUD_ESTADO_MOTIVO);
+		$xtpl->assign('motivo', htmlspecialchars($oSolicitud->getMotivo()->getDs_motivo(), ENT_QUOTES, "UTF-8"));
+		$xtpl->assign('comment', $ds_comment);
+		$xtpl->parse('main');
+		$bodyMail = $xtpl->text('main');
+
+
+
+
+
+
+		if ($oSolicitud->getDs_mail() != "") {
+
+			CYTSecureUtils::sendMail($oSolicitud->getDocente()->getDs_nombre().' '.$oSolicitud->getDocente()->getDs_apellido(), $oSolicitud->getDs_mail(), $subjectMail, $bodyMail, $attachs);
+		}
+
+	}
 
 }
 ?>

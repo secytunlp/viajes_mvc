@@ -379,5 +379,7 @@
 	<action name='cambiarEstadoRendicion_init' class='CambiarEstadoRendicionInitAction'
 		currentMenuGroup='10' />
 	<action name='cambiarEstadoRendicion' class='CambiarEstadoRendicionAction' />
-	
+
+	<action name='view_rendicion_pdf' class='ViewRendicionPDFAction'/>
+
 </navegation>

@@ -316,4 +316,11 @@ define('CYT_MSG_RENDICION_ENVIAR_PREGUNTA', '¿Enviar la rendicion?', true);
 define('CYT_MSG_RENDICION_PDF_TITLE', 'VISUALIZAR RENDICION', true);
 define('CYT_MSG_RENDICION_ARCHIVO_NOMBRE', 'RENDICION_', true);
 
+define('CYT_MSG_RENDICION_CREADA', 'Sólo se puede crear una rendición por solicitud', true);
+
+define('CYT_MSG_RENDICION_RENDICION_PROBLEMA', 'Hubo un error al subir la rendición, intente nuevamente, si el problema persiste envíenos un mail a viajes.secyt@presi.unlp.edu.ar', true);
+define('CYT_MSG_RENDICION_INFORME_PROBLEMA', 'Hubo un error al subir el informe técnico, intente nuevamente, si el problema persiste envíenos un mail a viajes.secyt@presi.unlp.edu.ar', true);
+define('CYT_MSG_RENDICION_CONSTANCIA_PROBLEMA', 'Hubo un error al subir la constancia, intente nuevamente, si el problema persiste envíenos un mail a viajes.secyt@presi.unlp.edu.ar', true);
+
+define('CYT_MSG_RENDICION_PDF_HEADER_TITLE', 'RENDICION DE SUBSIDIOS ', true);
 ?>

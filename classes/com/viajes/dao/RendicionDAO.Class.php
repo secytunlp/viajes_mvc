@@ -22,7 +22,7 @@ class RendicionDAO extends EntityDAO {
 
 		$fieldsValues = array();
 
-		$fieldsValues["cd_solicitud"] = $this->formatIfNull( $entity->getSolicitud()->getOid(), 'null' );
+		$fieldsValues["solicitud_oid"] = $this->formatIfNull( $entity->getSolicitud()->getOid(), 'null' );
 		$fieldsValues["dt_fecha"] = $this->formatString($entity->getDt_fecha());
 		$fieldsValues["ds_rendicion"] = $this->formatString($entity->getDs_rendicion());
         $fieldsValues["ds_informe"] = $this->formatString($entity->getDs_informe());

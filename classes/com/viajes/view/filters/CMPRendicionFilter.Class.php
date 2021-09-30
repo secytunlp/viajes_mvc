@@ -55,7 +55,7 @@ class CMPRendicionFilter extends CMPFilter{
 		//filtramos por solicitud.
 		$solicitud = $this->getSolicitud();
 		if($solicitud!=null && $solicitud->getOid()!=null){
-			$criteria->addFilter("cd_solicitud", $solicitud->getOid(), "=" );
+			$criteria->addFilter("solicitud_oid", $solicitud->getOid(), "=" );
 		}
 
 

@@ -29,7 +29,7 @@ class AdmitRendicionAction extends CdtEditAsyncAction {
     	$oCriteria = new CdtSearchCriteria();
 		$oCriteria->addFilter('rendicion_oid', $entity->getOid(), '=');
 		$oCriteria->addNull('fechaHasta');
-		$managerRendicionEstado =  CYTSecureManagerFactory::getRendicionEstadoManager();
+		$managerRendicionEstado =  ManagerFactory::getRendicionEstadoManager();
 		$oRendicionEstado = $managerRendicionEstado->getEntity($oCriteria);
 		if (($oRendicionEstado->getEstado()->getOid()!=CYT_ESTADO_SOLICITUD_RECIBIDA)) {
 			
@@ -52,7 +52,7 @@ class AdmitRendicionAction extends CdtEditAsyncAction {
 	 * @see classes/com/gestion/action/entities/DeleteEntityAction::getEntityManager()
 	 */
 	protected function getEntityManager(){
-		return CYTSecureManagerFactory::getRendicionManager();
+		return ManagerFactory::getRendicionManager();
 	}
 
 
