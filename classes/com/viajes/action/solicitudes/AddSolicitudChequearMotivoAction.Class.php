@@ -32,7 +32,8 @@ class AddSolicitudChequearMotivoAction extends CdtAction{
 				case CYT_MOTIVO_A:
 				$show[]='ds_objetivo';
 				$show[]='ds_relevanciaA';
-				$show[]='bl_congreso';
+				$hide[]='bl_congreso';
+                $show[]='ds_linkreunion';
 				$show[]='ds_trabajo';
 				$show[]='ds_aceptacion';
 				$show[]='ds_titulotrabajo';
@@ -69,6 +70,7 @@ class AddSolicitudChequearMotivoAction extends CdtAction{
 				$hide[]='ds_objetivo';
 				$hide[]='ds_relevanciaA';
 				$hide[]='bl_congreso';
+                $hide[]='ds_linkreunion';
 				$hide[]='ds_trabajo';
 				$hide[]='ds_aceptacion';
 				$hide[]='ds_titulotrabajo';
@@ -106,6 +108,7 @@ class AddSolicitudChequearMotivoAction extends CdtAction{
 				$hide[]='ds_objetivo';
 				$hide[]='ds_relevanciaA';
 				$hide[]='bl_congreso';
+                $hide[]='ds_linkreunion';
 				$hide[]='ds_trabajo';
 				$hide[]='ds_aceptacion';
 				$hide[]='ds_titulotrabajo';

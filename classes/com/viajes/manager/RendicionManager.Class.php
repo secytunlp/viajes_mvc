@@ -31,21 +31,21 @@ class RendicionManager extends EntityManager{
 		if (!file_exists($dir)) mkdir($dir, 0777);
 		$handle=opendir($dir);
 		while ($archivo = readdir($handle)){
-	        if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA))){
-	        	rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA, $entity->getOid(), $archivo));
-	        	CdtReflectionUtils::doSetter( $entity, 'ds_rendicion', str_replace('TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA, $entity->getOid(), $archivo) );
-	         	//unlink($dir.$archivo);
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA))){
+				rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA, $entity->getOid(), $archivo));
+				CdtReflectionUtils::doSetter( $entity, 'ds_rendicion', str_replace('TMP_'.CYT_LBL_RENDICION_RENDICION_SIGLA, $entity->getOid(), $archivo) );
+				//unlink($dir.$archivo);
 			}
-            if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA))){
-                rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA, $entity->getOid(), $archivo));
-                CdtReflectionUtils::doSetter( $entity, 'ds_informe', str_replace('TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA, $entity->getOid(), $archivo) );
-                //unlink($dir.$archivo);
-            }
-            if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_CONSTANCIA_SIGLA))){
-                rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_CONSTANCIA_SIGLA, $entity->getOid(), $archivo));
-                CdtReflectionUtils::doSetter( $entity, 'ds_certificado', str_replace('TMP_'.CYT_LBL_CERTIFICADO_CONSTANCIA_SIGLA, $entity->getOid(), $archivo) );
-                //unlink($dir.$archivo);
-            }
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA))){
+				rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA, $entity->getOid(), $archivo));
+				CdtReflectionUtils::doSetter( $entity, 'ds_informe', str_replace('TMP_'.CYT_LBL_RENDICION_INFORME_SIGLA, $entity->getOid(), $archivo) );
+				//unlink($dir.$archivo);
+			}
+			if ((is_file($dir.$archivo))&&(strchr($archivo,'TMP_'.CYT_LBL_RENDICION_CONSTANCIA_SIGLA))){
+				rename ($dir.$archivo,$dir.str_replace('TMP_'.CYT_LBL_RENDICION_CONSTANCIA_SIGLA, $entity->getOid(), $archivo));
+				CdtReflectionUtils::doSetter( $entity, 'ds_certificado', str_replace('TMP_'.CYT_LBL_CERTIFICADO_CONSTANCIA_SIGLA, $entity->getOid(), $archivo) );
+				//unlink($dir.$archivo);
+			}
 		}
 		closedir($handle);
 		parent::update($entity);
@@ -70,53 +70,53 @@ class RendicionManager extends EntityManager{
 
 
 
-    }
+	}
 
-
-/**
-     * se modifica la entity
-     * @param (Entity $entity) entity a modificar.
-     */
-    public function update(Entity $entity) {
-    	parent::update($entity);
-    	/*if ($entity->getLugarTrabajo()->getOid()) {
-    		$managerLugarTrabajo =  CYTSecureManagerFactory::getLugarTrabajoManager();
-	    	$oLugarTrabajo = $managerLugarTrabajo->getObjectByCode($entity->getLugarTrabajo()->getOid());
-			if (!empty($oLugarTrabajo)) {
-					$oLugarTrabajo->setDs_direccion($entity->getDs_direccion());
-					$oLugarTrabajo->setDs_telefono($entity->getDs_telefono());
-					$managerLugarTrabajo->update($oLugarTrabajo);
-			}
-    	}*/
-
-
-
-
-    }
-
-
-/**
-     * se modifica la entity
-     * @param (Entity $entity) entity a modificar.
-     */
-    public function updateWithoutRelations(Entity $entity) {
-    	parent::update($entity);
-
-    }
 
 	/**
-     * se elimina la entity
-     * @param int identificador de la entity a eliminar.
-     */
-    public function delete($id) {
+	 * se modifica la entity
+	 * @param (Entity $entity) entity a modificar.
+	 */
+	public function update(Entity $entity) {
+		parent::update($entity);
+		/*if ($entity->getLugarTrabajo()->getOid()) {
+            $managerLugarTrabajo =  CYTSecureManagerFactory::getLugarTrabajoManager();
+            $oLugarTrabajo = $managerLugarTrabajo->getObjectByCode($entity->getLugarTrabajo()->getOid());
+            if (!empty($oLugarTrabajo)) {
+                    $oLugarTrabajo->setDs_direccion($entity->getDs_direccion());
+                    $oLugarTrabajo->setDs_telefono($entity->getDs_telefono());
+                    $managerLugarTrabajo->update($oLugarTrabajo);
+            }
+        }*/
 
 
-    	$oCriteria = new CdtSearchCriteria();
+
+
+	}
+
+
+	/**
+	 * se modifica la entity
+	 * @param (Entity $entity) entity a modificar.
+	 */
+	public function updateWithoutRelations(Entity $entity) {
+		parent::update($entity);
+
+	}
+
+	/**
+	 * se elimina la entity
+	 * @param int identificador de la entity a eliminar.
+	 */
+	public function delete($id) {
+
+
+		$oCriteria = new CdtSearchCriteria();
 		$oCriteria->addFilter('rendicion_oid', $id, '=');
 		$oCriteria->addNull('fechaHasta');
 		$managerRendicionEstadoManager =  ManagerFactory::getRendicionEstadoManager();
 		$oRendicionEstado = $managerRendicionEstadoManager->getEntity($oCriteria);
-    	if (($oRendicionEstado->getEstado()->getOid()!=CYT_ESTADO_SOLICITUD_CREADA)) {
+		if (($oRendicionEstado->getEstado()->getOid()!=CYT_ESTADO_SOLICITUD_CREADA)) {
 
 			throw new GenericException( CYT_MSG_CAMBIO_ELIMINAR_PROHIBIDO);
 		}
@@ -128,62 +128,62 @@ class RendicionManager extends EntityManager{
 			$oSolicitudManager =  ManagerFactory::getSolicitudManager();
 			$oSolicitud = $oSolicitudManager->getObjectByCode($oRendicion->getSolicitud()->getOid());
 
-	    	$oRendicionEstadoDAO =  DAOFactory::getRendicionEstadoDAO();
-	        $oRendicionEstadoDAO->deleteRendicionEstadoPorRendicion($id);
+			$oRendicionEstadoDAO =  DAOFactory::getRendicionEstadoDAO();
+			$oRendicionEstadoDAO->deleteRendicionEstadoPorRendicion($id);
 
 
 
 
 
-	        $oRendicionManager = ManagerFactory::getRendicionManager();
+			$oRendicionManager = ManagerFactory::getRendicionManager();
 			$oRendicion = $oRendicionManager->getObjectByCode($id);
-	    	parent::delete( $id );
+			parent::delete( $id );
 
-	    	$dirApp = CYT_PATH_PDFS.'/'.$oSolicitud->getPeriodo()->getDs_periodo().'/';
+			$dirApp = CYT_PATH_PDFS.'/'.$oSolicitud->getPeriodo()->getDs_periodo().'/';
 
 			$dir =$dirApp. $oSolicitud->getDocente()->getNu_documento().'/'.PATH_RENDICIONES.'/';
 
-	    	$handle=opendir($dir);
+			$handle=opendir($dir);
 			while ($archivo = readdir($handle)){
-		        if ((is_file($dir.$archivo))){
-		         	unlink($dir.$archivo);
+				if ((is_file($dir.$archivo))){
+					unlink($dir.$archivo);
 				}
 			}
 
 			$dir =$dirApp.str_pad($oSolicitud->getDocente()->getNu_documento(), 8, "0", STR_PAD_LEFT);
-	    	$dir .='/'.PATH_RENDICIONES.'/';
-	    	$handle=opendir($dir);
+			$dir .='/'.PATH_RENDICIONES.'/';
+			$handle=opendir($dir);
 			while ($archivo = readdir($handle)){
-		        if ((is_file($dir.$archivo))){
-		         	unlink($dir.$archivo);
+				if ((is_file($dir.$archivo))){
+					unlink($dir.$archivo);
 				}
 			}
 
 			closedir($handle);
 		}
 
-    }
+	}
 
 	/**
 	 * (non-PHPdoc)
 	 * @see classes/com/entities/manager/EntityManager::validateOnAdd()
 	 */
-    protected function validateOnAdd(Entity $entity){
+	protected function validateOnAdd(Entity $entity){
 
-    	parent::validateOnAdd($entity);
-    $error='';
+		parent::validateOnAdd($entity);
+		$error='';
 
 
 
-    	if ($error) {
-    		throw new GenericException( $error );
-    	}
-    }
+		if ($error) {
+			throw new GenericException( $error );
+		}
+	}
 
-    /**
-     * (non-PHPdoc)
-     * @see classes/com/entities/manager/EntityManager::validateOnUpdate()
-     */
+	/**
+	 * (non-PHPdoc)
+	 * @see classes/com/entities/manager/EntityManager::validateOnUpdate()
+	 */
 	protected function validateOnUpdate(Entity $entity){
 
 		parent::validateOnUpdate($entity);
@@ -192,9 +192,9 @@ class RendicionManager extends EntityManager{
 
 
 
-    	if ($error) {
-    		throw new GenericException( $error );
-    	}
+		if ($error) {
+			throw new GenericException( $error );
+		}
 
 	}
 
@@ -222,7 +222,7 @@ class RendicionManager extends EntityManager{
 		$oSolicitud = $oSolicitudManager->getObjectByCode($oRendicion->getSolicitud()->getOid());
 
 
-		$this->validateOnSend($entity, $oSolicitud->getMotivo()->getOid());
+		$this->validateOnSend($entity, $oSolicitud->getMotivo()->getOid(), $oSolicitud->getPeriodo()->getDs_periodo());
 		//armamos el pdf con la data necesaria.
 		$pdf = new ViewRendicionPDF();
 
@@ -260,15 +260,15 @@ class RendicionManager extends EntityManager{
 
 
 
-    	($oSolicitud->getFacultadplanilla()->getOid() != CYT_FACULTAD_NO_DECLARADA)?$pdf->setDs_facultadplanilla($oSolicitud->getFacultadplanilla()->getDs_facultad()):$pdf->setDs_facultadplanilla(CYT_MSG_SOLICITUD_UNIVERSIDAD);;
+		($oSolicitud->getFacultadplanilla()->getOid() != CYT_FACULTAD_NO_DECLARADA)?$pdf->setDs_facultadplanilla($oSolicitud->getFacultadplanilla()->getDs_facultad()):$pdf->setDs_facultadplanilla(CYT_MSG_SOLICITUD_UNIVERSIDAD);;
 
-    	/*$presupuestosManager = new PresupuestoRendicionManager();
-		$pdf->setPresupuestos( $presupuestosManager->getEntities($oCriteria) );*/
+		/*$presupuestosManager = new PresupuestoRendicionManager();
+        $pdf->setPresupuestos( $presupuestosManager->getEntities($oCriteria) );*/
 
 		$pdf->title = CYT_MSG_RENDICION_PDF_TITLE;
 		$pdf->SetFont('Arial','', 13);
 
-		// establecemos los márgenes
+		// establecemos los mÃ¡rgenes
 		$pdf->SetMargins(10, 20 , 10);
 		$pdf->setMaxWidth($pdf->w - $pdf->lMargin - $pdf->rMargin);
 		//$pdf->SetAutoPageBreak(true,90);
@@ -289,31 +289,31 @@ class RendicionManager extends EntityManager{
 
 		$fileName = $dirDoc.CYT_MSG_RENDICION_ARCHIVO_NOMBRE.CYTSecureUtils::stripAccents($oSolicitud->getDocente()->getDs_apellido()).'.pdf';;
 		$pdf->Output($fileName,'F');
-        $pdf->Output();
+		$pdf->Output();
 
 		$attachs = array();
 		$handle=opendir($dirDoc);
 		while ($archivo = readdir($handle))
 		{
-	        if (is_file($dirDoc.$archivo))
-	         {
-	         	$attachs[]=$dirDoc.$archivo;
-	         }
+			if (is_file($dirDoc.$archivo))
+			{
+				$attachs[]=$dirDoc.$archivo;
+			}
 		}
 		$dirDoc = $dir.str_pad($oSolicitud->getDocente()->getNu_documento(), 8, "0", STR_PAD_LEFT);
 		$handle=opendir($dirDoc);
 		while ($archivo = readdir($handle))
 		{
-	        if (is_file($dirDoc.$archivo))
-	         {
-	         	$attachs[]=$dirDoc.$archivo;
-	         }
+			if (is_file($dirDoc.$archivo))
+			{
+				$attachs[]=$dirDoc.$archivo;
+			}
 		}
 
 		$msg = CYT_LBL_RENDICION_MAIL_SUBJECT;
 		$year = $oPeriodo->getDs_periodo();
 		$yearP = $year+1;
-    	$params = array ($year,$yearP );
+		$params = array ($year,$yearP );
 
 		$subjectMail = htmlspecialchars(CdtFormatUtils::formatMessage( $msg, $params ), ENT_QUOTES, "UTF-8");
 
@@ -334,17 +334,17 @@ class RendicionManager extends EntityManager{
 
 
 
-        if ($oSolicitud->getDs_mail() != "") {
+		if ($oSolicitud->getDs_mail() != "") {
 
-         		CYTSecureUtils::sendMail($oSolicitud->getDocente()->getDs_nombre().' '.$oSolicitud->getDocente()->getDs_apellido(), $oSolicitud->getDs_mail(), $subjectMail, $bodyMail, $attachs);
+			CYTSecureUtils::sendMail($oSolicitud->getDocente()->getDs_nombre().' '.$oSolicitud->getDocente()->getDs_apellido(), $oSolicitud->getDs_mail(), $subjectMail, $bodyMail, $attachs);
 
 
-        }
-        CYTSecureUtils::sendMail(CDT_POP_MAIL_FROM_NAME, CDT_POP_MAIL_FROM, $subjectMail, $bodyMail, $attachs,$oSolicitud->getDocente()->getDs_nombre().' '.$oSolicitud->getDocente()->getDs_apellido(),$oSolicitud->getDs_mail());
+		}
+		CYTSecureUtils::sendMail(CDT_POP_MAIL_FROM_NAME, CDT_POP_MAIL_FROM, $subjectMail, $bodyMail, $attachs,$oSolicitud->getDocente()->getDs_nombre().' '.$oSolicitud->getDocente()->getDs_apellido(),$oSolicitud->getDs_mail());
 
 	}
 
-	protected function validateOnSend(Entity $entity, $motivo=''){
+	protected function validateOnSend(Entity $entity, $motivo='', $periodo=CYT_PERIODO_YEAR){
 
 		$error='';
 
@@ -360,7 +360,7 @@ class RendicionManager extends EntityManager{
 
 		$dir = CYT_PATH_PDFS.'/';
 		if (!file_exists($dir)) mkdir($dir, 0777);
-		$dir .= CYT_PERIODO_YEAR.'/';
+		$dir .= $periodo.'/';
 		if (!file_exists($dir)) mkdir($dir, 0777);
 		$oUser = CdtSecureUtils::getUserLogged();
 		$separarCUIL = explode('-',trim($oUser->getDs_username()));
@@ -405,15 +405,15 @@ class RendicionManager extends EntityManager{
 
 
 		if ($error) {
-    		throw new GenericException( $error );
-    	}
+			throw new GenericException( $error );
+		}
 	}
 
 
 
 	public function cambiarEstado(Rendicion $oRendicion, Estado $oEstado, $motivo){
 
-	 	$oRendicionEstado = new RendicionEstado();
+		$oRendicionEstado = new RendicionEstado();
 		$oRendicionEstado->setRendicion($oRendicion);
 		$oRendicionEstado->setFechaDesde(date(DB_DEFAULT_DATETIME_FORMAT));
 		$oRendicionEstado->setEstado($oEstado);
@@ -422,7 +422,7 @@ class RendicionManager extends EntityManager{
 		$oRendicionEstado->setUser($oUser);
 		$oRendicionEstado->setFechaUltModificacion(date(DB_DEFAULT_DATETIME_FORMAT));
 
-	 	$oCriteria = new CdtSearchCriteria();
+		$oCriteria = new CdtSearchCriteria();
 		$oCriteria->addFilter('rendicion_oid', $oRendicion->getOid(), '=');
 		$oCriteria->addNull('fechaHasta');
 		$managerRendicionEstado =  ManagerFactory::getRendicionEstadoManager();
@@ -439,7 +439,7 @@ class RendicionManager extends EntityManager{
 		}
 		else
 			$managerRendicionEstado->add($oRendicionEstado);
-	 }
+	}
 
 	public function confirm(Entity $entity, $estado_oid, $motivo='') {
 

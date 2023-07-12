@@ -789,36 +789,87 @@ function successDefault_{form_id}(data ){
 					    <!-- END: input -->
 					</div>
 		<!-- END: bl_congreso -->
-		<!-- BEGIN: ds_trabajo -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_trabajo">
-					    
-					     <!-- BEGIN: label -->
-					    <label for="ds_trabajo" id="label_ds_trabajo">{value} {required}:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    <input id="ds_trabajo" type="file" value="" size="32" name="ds_trabajo" onChange="uploadAjax(this,'{actionFile}','ds_trabajo')">
-					    <!-- END: input -->
-					    <span id="ds_trabajo_cargado" >
-						  <!-- Aqui van los archivos cargados -->
-						  {ds_trabajo_cargado}
-						</span>
-					</div>
-		<!-- END: ds_trabajo -->
-		<!-- BEGIN: ds_aceptacion -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_aceptacion">
-					    
-					     <!-- BEGIN: label -->
-					    <label for="ds_aceptacion" id="label_ds_aceptacion"></label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    <input id="ds_aceptacion" type="file" value="" size="32" name="ds_aceptacion" onChange="uploadAjax(this,'{actionFile}','ds_aceptacion')">
-					    <!-- END: input -->
-					    <span id="ds_aceptacion_cargado" >
-						  <!-- Aqui van los archivos cargados -->
-						  {ds_aceptacion_cargado}
-						</span>
-					</div>
-		<!-- END: ds_aceptacion -->
+		<!-- BEGIN: ds_congreso -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			{input}
+			<!-- END: input -->
+		</div>
+		<!-- END: ds_congreso -->
+		<!-- BEGIN: bl_nacional -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			{input}
+			<!-- END: input -->
+		</div>
+		<!-- END: bl_nacional -->
+		<!-- BEGIN: ds_linkreunion -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			<br>{input}
+			<!-- END: input -->
+		</div>
+		<!-- END: ds_linkreunion -->
+		<!-- BEGIN: ds_lugartrabajo -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			{input}
+			<!-- END: input -->
+
+
+		</div>
+		<!-- END: ds_lugartrabajo -->
+		<!-- BEGIN: dt_fechatrabajo -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			{input}
+			<!-- END: input -->
+
+
+		</div>
+		<!-- END: dt_fechatrabajo -->
+		<!-- BEGIN: dt_fechatrabajohasta -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			{input}
+			<!-- END: input -->
+
+
+		</div>
+		<!-- END: dt_fechatrabajohasta -->
+		<!-- BEGIN: ds_relevanciatrabajo -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
+
+			<!-- BEGIN: label -->
+			<label for="{input_name}" id="label_{input_name}">{value} *:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			<br>{input}
+			<!-- END: input -->
+		</div>
+		<!-- END: ds_relevanciatrabajo -->
+
 		<!-- BEGIN: ds_titulotrabajo -->
 					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
 					    
@@ -845,76 +896,7 @@ function successDefault_{form_id}(data ){
 					    
 					</div>
 		<!-- END: ds_autorestrabajo -->
-		<!-- BEGIN: ds_congreso -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">  
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    {input}
-					    <!-- END: input --> 
-					</div>
-		<!-- END: ds_congreso -->
-		<!-- BEGIN: bl_nacional -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    {input}
-					    <!-- END: input -->
-					</div>
-		<!-- END: bl_nacional -->
-		<!-- BEGIN: ds_lugartrabajo -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
-					    
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    {input}
-					    <!-- END: input -->
-					
-					    
-					</div>
-		<!-- END: ds_lugartrabajo -->
-		<!-- BEGIN: dt_fechatrabajo -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
-					    
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    {input}
-					    <!-- END: input -->
-					
-					    
-					</div>
-		<!-- END: dt_fechatrabajo -->
-		<!-- BEGIN: dt_fechatrabajohasta -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
-					    
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    {input}
-					    <!-- END: input -->
-					
-					    
-					</div>
-		<!-- END: dt_fechatrabajohasta -->
-		<!-- BEGIN: ds_relevanciatrabajo -->
-					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
-					    
-					    <!-- BEGIN: label -->
-					    <label for="{input_name}" id="label_{input_name}">{value} *:</label>
-					    <!-- END: label -->
-					    <!-- BEGIN: input -->
-					    <br>{input}
-					    <!-- END: input -->
-					</div>
-		<!-- END: ds_relevanciatrabajo -->
+
 		<!-- BEGIN: ds_resumentrabajo -->
 					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-{input_name}">
 					    
@@ -937,6 +919,36 @@ function successDefault_{form_id}(data ){
 					    <!-- END: input -->
 					</div>
 		<!-- END: ds_modalidadtrabajo -->
+		<!-- BEGIN: ds_trabajo -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_trabajo">
+
+			<!-- BEGIN: label -->
+			<label for="ds_trabajo" id="label_ds_trabajo">{value} {required}:</label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			<input id="ds_trabajo" type="file" value="" size="32" name="ds_trabajo" onChange="uploadAjax(this,'{actionFile}','ds_trabajo')">
+			<!-- END: input -->
+			<span id="ds_trabajo_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_trabajo_cargado}
+						</span>
+		</div>
+		<!-- END: ds_trabajo -->
+		<!-- BEGIN: ds_aceptacion -->
+		<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_aceptacion">
+
+			<!-- BEGIN: label -->
+			<label for="ds_aceptacion" id="label_ds_aceptacion"></label>
+			<!-- END: label -->
+			<!-- BEGIN: input -->
+			<input id="ds_aceptacion" type="file" value="" size="32" name="ds_aceptacion" onChange="uploadAjax(this,'{actionFile}','ds_aceptacion')">
+			<!-- END: input -->
+			<span id="ds_aceptacion_cargado" >
+						  <!-- Aqui van los archivos cargados -->
+						  {ds_aceptacion_cargado}
+						</span>
+		</div>
+		<!-- END: ds_aceptacion -->
 		<!-- BEGIN: ds_invitaciongrupo -->
 					<div class="item" style="min-width: {minWidth};display:{display}"  id="item-div-ds_invitaciongrupo">
 					    

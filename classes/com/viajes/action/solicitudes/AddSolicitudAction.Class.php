@@ -80,7 +80,7 @@ class AddSolicitudAction extends AddEntityAction{
             		$nombre = CYT_LBL_SOLICITUD_A_COPIA_TRABAJO;
             		$sigla = CYT_LBL_SOLICITUD_A_COPIA_TRABAJO_SIGLA;
             		
-				break;
+				    break;
         			case 'ds_aceptacion':
             		$nombre = CYT_LBL_SOLICITUD_A_ACEPTACION;
             		$sigla = CYT_LBL_SOLICITUD_A_ACEPTACION_SIGLA;

@@ -138,6 +138,7 @@ class ViewSolicitudPDFAction extends CdtAction{
 		$pdf->setDs_titulotrabajo($oSolicitud->getDs_titulotrabajo());
 		$pdf->setDs_autorestrabajo($oSolicitud->getDs_autorestrabajo());
 		$pdf->setDs_congreso($oSolicitud->getDs_congreso());
+        $pdf->setDs_linkreunion($oSolicitud->getDs_linkreunion());
 		$pdf->setDs_lugardeltrabajo($oSolicitud->getDs_lugartrabajo());
 		$pdf->setDt_fechatrabajo($oSolicitud->getDt_fechatrabajo());
 		$pdf->setDt_fechatrabajohasta($oSolicitud->getDt_fechatrabajohasta());

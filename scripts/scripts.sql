@@ -24,27 +24,27 @@ SET FOREIGN_KEY_CHECKS=0;
 DELETE FROM cyt_solicitud_estado WHERE EXISTS (
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = cyt_solicitud_estado.solicitud_oid AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = cyt_solicitud_estado.solicitud_oid AND cd_periodo = 14
 );
 
 DELETE FROM presupuesto  WHERE EXISTS (
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = presupuesto .cd_solicitud AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = presupuesto .cd_solicitud AND cd_periodo = 14
 );
 
 
 DELETE FROM cyt_solicitud_proyecto WHERE EXISTS (
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = cyt_solicitud_proyecto.solicitud_oid AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = cyt_solicitud_proyecto.solicitud_oid AND cd_periodo = 14
 );
 
-DELETE FROM solicitud WHERE cd_periodo = 9;
+DELETE FROM solicitud WHERE cd_periodo = 14;
 SET FOREIGN_KEY_CHECKS=1;
 
 ### Insertas todas las solicitudes a incentivos desde viajes
-SELECT * FROM solicitud WHERE cd_periodo = 9;
+SELECT * FROM solicitud WHERE cd_periodo = 14;
 
 ### Insertas todas las cyt_solicitud_estado a incentivos desde viajes
 SELECT *
@@ -53,7 +53,7 @@ WHERE EXISTS (
 
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = cyt_solicitud_estado.solicitud_oid AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = cyt_solicitud_estado.solicitud_oid AND cd_periodo = 14
 );
 
 ### Insertas todas los presupuesto  a incentivos desde viajes
@@ -63,7 +63,7 @@ WHERE EXISTS (
 
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = presupuesto .cd_solicitud AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = presupuesto .cd_solicitud AND cd_periodo = 14
 );
 
 
@@ -74,7 +74,7 @@ WHERE EXISTS (
 
 SELECT cd_solicitud
 FROM solicitud
-WHERE solicitud.cd_solicitud = cyt_solicitud_proyecto.solicitud_oid AND cd_periodo = 9
+WHERE solicitud.cd_solicitud = cyt_solicitud_proyecto.solicitud_oid AND cd_periodo = 14
 );
 
 

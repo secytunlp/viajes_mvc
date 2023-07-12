@@ -746,7 +746,7 @@ class SolicitudManager extends EntityManager{
 		
 		
 		if ($entity->getMotivo()->getOid()==CYT_MOTIVO_A) {
-			if ((!$entity->getNu_monto())||(!$entity->getDs_curriculum())||(!$entity->getDs_relevanciatrabajo())||(!$entity->getDs_modalidadtrabajo())||(!$entity->getDs_objetivo())||($entity->getBl_congreso()==0)||(!$entity->getDs_titulotrabajo())||(!$entity->getDs_congreso())||(!$entity->getBl_nacional())||(!$entity->getDs_lugartrabajo())||(!$entity->getDt_fechatrabajo())||(!$entity->getDt_fechatrabajohasta())||(!$entity->getDs_relevanciaA())||(($entity->getBl_congreso()==2)&&(!$entity->getDs_aceptacion()))) {
+			if ((!$entity->getNu_monto())||(!$entity->getDs_curriculum())||(!$entity->getDs_relevanciatrabajo())||(!$entity->getDs_modalidadtrabajo())||(!$entity->getDs_objetivo())||($entity->getBl_congreso()==0)||(!$entity->getDs_titulotrabajo())||(!$entity->getDs_congreso())||(!$entity->getBl_nacional())||(!$entity->getDs_lugartrabajo())||(!$entity->getDt_fechatrabajo())||(!$entity->getDt_fechatrabajohasta())||(!$entity->getDs_relevanciaA())||(($entity->getBl_congreso()==2)&&(!$entity->getDs_aceptacion())&&(!$entity->getDs_linkreunion()))) {
 				$error .= CYT_MSG_CAMPOS_REQUERIDOS.' '.CYT_MSG_SOLICITUD_TAB_MOTIVO.'<br>';
 			}
 			if (!$okCv){

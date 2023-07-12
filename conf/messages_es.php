@@ -44,7 +44,7 @@ define('CYT_MSG_SOLICITUD_RESUMEN_PALABRAS_REQUIRED', 'El texto del resumen en l
 define('CYT_MSG_SOLICITUD_RESUMEN_PALABRAS', 'Palabras', true);
 
 
-define('CYT_MSG_SOLICITUD_TAB_DOMICILIO', "Domicilio", true);
+define('CYT_MSG_SOLICITUD_TAB_DOMICILIO', "Personales", true);
 define('CYT_MSG_SOLICITUD_DOMICILIO_TITULO', "Domicilio de notificación (Dentro del Radio Urbano de La Plata, Art. 20 Ord. 101)", true);
 define('CYT_MSG_SOLICITUD_TAB_UNIVERSIDAD', "Universidad", true);
 define('CYT_MSG_SOLICITUD_TAB_BECARIO', "Becario", true);
@@ -123,7 +123,7 @@ define('CYT_MSG_PRESUPUESTO_FECHA_FUERA_RANGO', CYT_LBL_PRESUPUESTO_DATE . ' fue
 //PDF
 
 define('CYT_MSG_SOLICITUD_PDF_HEADER_TITLE', 'SOLICITUD DE SUBSIDIOS', true);
-define('CYT_MSG_SOLICITUD_PDF_HEADER_TITLE_2', 'Viajes/Estadías/Inscripción a Congresos', true);
+define('CYT_MSG_SOLICITUD_PDF_HEADER_TITLE_2', 'Viajes/Estadías', true);
 
 define('CYT_MSG_SOLICITUD_PDF_MES_1', 'Junio', true);
 define('CYT_MSG_SOLICITUD_PDF_MES_2', 'Julio', true);
@@ -149,6 +149,7 @@ define('CYT_MSG_SOLICITUD_PDF_TITULO_CONFERENCIA', 'Título de la Conferencia', 
 define('CYT_MSG_SOLICITUD_PDF_AUTOR_TRABAJO', 'Autores del Trabajo', true);
 define('CYT_MSG_SOLICITUD_PDF_AUTOR_CONFERENCIA', 'Autor', true);
 define('CYT_MSG_SOLICITUD_PDF_NOMBRE_TRABAJO', 'Nombre del Congreso', true);
+define('CYT_MSG_SOLICITUD_PDF_NOMBRE_REUNION', 'Nombre de la Reunión Científica', true);
 define('CYT_MSG_SOLICITUD_PDF_NOMBRE_CONFERENCIA', 'Congreso donde se dictará la conferencia', true);
 define('CYT_MSG_SOLICITUD_PDF_CARACTER', 'Carácter', true);
 define('CYT_MSG_SOLICITUD_PDF_LUGAR', 'Lugar', true);

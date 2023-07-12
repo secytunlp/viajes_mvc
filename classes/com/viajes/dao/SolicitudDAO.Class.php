@@ -103,6 +103,7 @@ class SolicitudDAO extends EntityDAO {
 		$fieldsValues["ds_relevanciaB"] = $this->formatString( $entity->getDs_relevanciaB() );
 		$fieldsValues["ds_relevanciaA"] = $this->formatString( $entity->getDs_relevanciaA() );
 		$fieldsValues["ds_disciplina"] = $this->formatString( $entity->getDs_disciplina() );
+        $fieldsValues["ds_linkreunion"] = $this->formatString( $entity->getDs_linkreunion() );
 		return $fieldsValues;
 		
 	}
@@ -195,7 +196,7 @@ public function getFieldsToUpdate($entity){
 		$fieldsValues["ds_relevanciaB"] = $this->formatString( $entity->getDs_relevanciaB() );
 		$fieldsValues["ds_relevanciaA"] = $this->formatString( $entity->getDs_relevanciaA() );
 		$fieldsValues["ds_disciplina"] = $this->formatString( $entity->getDs_disciplina() );
-		
+        $fieldsValues["ds_linkreunion"] = $this->formatString( $entity->getDs_linkreunion() );
 
 		return $fieldsValues;
 	}

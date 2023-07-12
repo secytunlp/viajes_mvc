@@ -94,7 +94,25 @@ class ViewSolicitudPDF extends CdtPDFPrint{
 	private $ds_aportesB= ""; 
 	private $ds_relevanciaB= "";
 	private $ds_relevanciaA= "";
-	private $presupuestos= ""; 
+	private $presupuestos= "";
+
+    private $ds_linkreunion = "";
+
+    /**
+     * @return string
+     */
+    public function getDs_linkreunion()
+    {
+        return $this->ds_linkreunion;
+    }
+
+    /**
+     * @param string $ds_linkreunion
+     */
+    public function setDs_linkreunion($ds_linkreunion)
+    {
+        $this->ds_linkreunion = $ds_linkreunion;
+    }
 	  
 	public function __construct(){
 		
@@ -784,103 +802,183 @@ class ViewSolicitudPDF extends CdtPDFPrint{
 	
 	function motivoA() {
 		if ($this->getBl_congreso()) {
-			$this->SetFillColor(255,255,255);
-			$this->SetFont ( 'Arial', '', 10 );
-			$this->Cell ( $this->getMaxWidth()-150, 8, utf8_decode(CYT_MSG_SOLICITUD_PDF_MOTIVO_A_TIPO).":");
-			$this->SetFillColor(225,225,225);
-			switch ($this->getBl_congreso()) {
-				case CYT_CD_CONGRESO:
-					$congreso=CYT_DS_CONGRESO;
-					break;
-				case CYT_CD_CONFERENCIA:
-					$congreso=CYT_DS_CONFERENCIA;
-					break;
-			}
-		//	$this->Cell ( 145, 8, stripslashes($congreso), 'LTBR',0,'L',1);	
-			$this->MultiCell( $this->getMaxWidth()-40, 8, utf8_decode($congreso), 'LTBR','L',1);
-			$this->ln(10);
+            if ($this->getPeriodo_oid()<CYT_SOLICITUD_PERIODO_2023) {
+                $this->SetFillColor(255, 255, 255);
+                $this->SetFont('Arial', '', 10);
+                $this->Cell($this->getMaxWidth() - 150, 8, utf8_decode(CYT_MSG_SOLICITUD_PDF_MOTIVO_A_TIPO) . ":");
+                $this->SetFillColor(225, 225, 225);
+                switch ($this->getBl_congreso()) {
+                    case CYT_CD_CONGRESO:
+                        $congreso = CYT_DS_CONGRESO;
+                        break;
+                    case CYT_CD_CONFERENCIA:
+                        $congreso = CYT_DS_CONFERENCIA;
+                        break;
+                }
+                //	$this->Cell ( 145, 8, stripslashes($congreso), 'LTBR',0,'L',1);
+                $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($congreso), 'LTBR', 'L', 1);
+                $this->ln(10);
+            }
 		}
-		
-		$this->SetFillColor(255,255,255);
-		$this->SetFont ( 'Arial', '', 10 );
-		$titulo=($this->getBl_congreso()==CYT_CD_CONFERENCIA)?CYT_MSG_SOLICITUD_PDF_TITULO_CONFERENCIA.':':CYT_MSG_SOLICITUD_PDF_TITULO_TRABAJO.':';
-		$this->Cell ( $this->getMaxWidth()-150, 8, utf8_decode($titulo));
-		$this->SetFillColor(225,225,225);
-	//	$this->Cell ( 145, 8, stripslashes($ds_titulotrabajo), 'LTBR',0,'L',1);
-		$this->MultiCell( $this->getMaxWidth()-40, 8, utf8_decode($this->getDs_titulotrabajo()), 'LTBR','L',1);
-		$this->ln(10);
-		$this->SetFillColor(255,255,255);
-		$autor=($this->getBl_congreso()==CYT_CD_CONFERENCIA)?CYT_MSG_SOLICITUD_PDF_AUTOR_CONFERENCIA.':':CYT_MSG_SOLICITUD_PDF_AUTOR_TRABAJO.':';
-		$this->Cell ( $this->getMaxWidth()-150, 8, $autor);
-		$this->SetFillColor(225,225,225);
-		//$this->Cell ( 145, 8, stripslashes($ds_autorestrabajo), 'LTBR',0,'L',1);
-		$this->MultiCell( $this->getMaxWidth()-40, 8, utf8_decode($this->getDs_autorestrabajo()), 'LTBR','L',1);
-		$this->ln(10);
-		$this->SetFillColor(255,255,255);
-		$congreso=($this->getBl_congreso()==CYT_CD_CONFERENCIA)?CYT_MSG_SOLICITUD_PDF_NOMBRE_CONFERENCIA.':':CYT_MSG_SOLICITUD_PDF_NOMBRE_TRABAJO.':';
-		if($this->getBl_congreso()==CYT_CD_CONFERENCIA){
-			$x = $this->GetX();
-			$y = $this->GetY();
-			$this->MultiCell( $this->getMaxWidth()-150, 4, $congreso);
-			$this->SetXY($x+40, $y-1);
-			
-			
-		}
-		else $this->Cell ( $this->getMaxWidth()-150, 8, $congreso);
-		$this->SetFillColor(225,225,225);
-		//$this->Cell ( 145, 8, stripslashes($ds_congreso), 'LTBR',0,'L',1);
-		$this->MultiCell( $this->getMaxWidth()-40, 8, utf8_decode($this->getDs_congreso()), 'LTBR','L',1);
-		$this->ln(10);
-		if ($this->getBl_nacional()) {
-			$this->SetFillColor(255,255,255);
-			$this->SetFont ( 'Arial', '', 10 );
-			$this->Cell ( $this->getMaxWidth()-150, 8, utf8_decode(CYT_MSG_SOLICITUD_PDF_CARACTER).":");
-			$this->SetFillColor(225,225,225);
-			switch ($this->getBl_nacional()) {
-				case CYT_CD_NACIONAL:
-					$nacional=CYT_DS_NACIONAL;
-					break;
-				case CYT_CD_INTERNACIONAL:
-					$nacional=CYT_DS_INTERNACIONAL;
-					break;
-			}
-		//	$this->Cell ( 145, 8, stripslashes($congreso), 'LTBR',0,'L',1);	
-			$this->MultiCell( $this->getMaxWidth()-40, 8, utf8_decode($nacional), 'LTBR','L',1);
-			$this->ln(10);
-		}
-		if ($this->getPeriodo_oid()>CYT_SOLICITUD_PERIODO_2016) {
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth()-178, 8, CYT_MSG_SOLICITUD_PDF_LUGAR.":");
-			$this->SetFillColor(225,225,225);
-			$this->Cell ( $this->getMaxWidth()-98, 8, utf8_decode($this->getDs_lugardeltrabajo()), 'LTBR',0,'L',1);
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth()-168, 8, CYT_MSG_SOLICITUD_PDF_FECHA.":");
-			$this->SetFillColor(225,225,225);
-			$this->Cell ( $this->getMaxWidth()-168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajo()), 'LTBR',0,'L',1);
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth()-170, 8, CYT_MSG_SOLICITUD_PDF_FECHA_HASTA.":");
-			$this->SetFillColor(225,225,225);
-			$this->Cell ( $this->getMaxWidth()-168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajohasta()), 'LTBR',0,'L',1);
-		}
-		else{
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth()-170, 8, CYT_MSG_SOLICITUD_PDF_LUGAR.":");
-			$this->SetFillColor(225,225,225);
-			$this->Cell ( $this->getMaxWidth()-95, 8, utf8_decode($this->getDs_lugardeltrabajo()), 'LTBR',0,'L',1);
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth()-155, 8, CYT_MSG_SOLICITUD_PDF_FECHA.":");
-			$this->SetFillColor(225,225,225);
-			$this->Cell ( $this->getMaxWidth()-150, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajo()), 'LTBR',0,'L',1);
-		}
-		$this->ln(10);
-		if ($this->getPeriodo_oid()>intval(CYT_SOLICITUD_PERIODO_2016)) {
-			$this->SetFillColor(255,255,255);
-			$this->Cell ( $this->getMaxWidth(), 8, CYT_MSG_SOLICITUD_PDF_RELEVANCIA_EVENTO.":");
-			$this->ln(6);
-			$this->SetFillColor(225,225,225);
-			$this->MultiCell( $this->getMaxWidth(), 8, utf8_decode($this->getDs_relevanciatrabajo()), 'LTBR','L',1);
-			$this->ln(10);
-		}
+        if ($this->getPeriodo_oid()<CYT_SOLICITUD_PERIODO_2023) {
+            $this->SetFillColor(255, 255, 255);
+            $this->SetFont('Arial', '', 10);
+            $titulo = ($this->getBl_congreso() == CYT_CD_CONFERENCIA) ? CYT_MSG_SOLICITUD_PDF_TITULO_CONFERENCIA . ':' : CYT_MSG_SOLICITUD_PDF_TITULO_TRABAJO . ':';
+            $this->Cell($this->getMaxWidth() - 150, 8, utf8_decode($titulo));
+            $this->SetFillColor(225, 225, 225);
+            //	$this->Cell ( 145, 8, stripslashes($ds_titulotrabajo), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_titulotrabajo()), 'LTBR', 'L', 1);
+            $this->ln(10);
+            $this->SetFillColor(255, 255, 255);
+            $autor = ($this->getBl_congreso() == CYT_CD_CONFERENCIA) ? CYT_MSG_SOLICITUD_PDF_AUTOR_CONFERENCIA . ':' : CYT_MSG_SOLICITUD_PDF_AUTOR_TRABAJO . ':';
+            $this->Cell($this->getMaxWidth() - 150, 8, $autor);
+            $this->SetFillColor(225, 225, 225);
+            //$this->Cell ( 145, 8, stripslashes($ds_autorestrabajo), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_autorestrabajo()), 'LTBR', 'L', 1);
+            $this->ln(10);
+            $this->SetFillColor(255, 255, 255);
+            $congreso = ($this->getBl_congreso() == CYT_CD_CONFERENCIA) ? CYT_MSG_SOLICITUD_PDF_NOMBRE_CONFERENCIA . ':' : CYT_MSG_SOLICITUD_PDF_NOMBRE_TRABAJO . ':';
+            if ($this->getBl_congreso() == CYT_CD_CONFERENCIA) {
+                $x = $this->GetX();
+                $y = $this->GetY();
+                $this->MultiCell($this->getMaxWidth() - 150, 4, $congreso);
+                $this->SetXY($x + 40, $y - 1);
+
+
+            } else $this->Cell($this->getMaxWidth() - 150, 8, $congreso);
+            $this->SetFillColor(225, 225, 225);
+            //$this->Cell ( 145, 8, stripslashes($ds_congreso), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_congreso()), 'LTBR', 'L', 1);
+            $this->ln(10);
+            if ($this->getBl_nacional()) {
+                $this->SetFillColor(255, 255, 255);
+                $this->SetFont('Arial', '', 10);
+                $this->Cell($this->getMaxWidth() - 150, 8, utf8_decode(CYT_MSG_SOLICITUD_PDF_CARACTER) . ":");
+                $this->SetFillColor(225, 225, 225);
+                switch ($this->getBl_nacional()) {
+                    case CYT_CD_NACIONAL:
+                        $nacional = CYT_DS_NACIONAL;
+                        break;
+                    case CYT_CD_INTERNACIONAL:
+                        $nacional = CYT_DS_INTERNACIONAL;
+                        break;
+                }
+                //	$this->Cell ( 145, 8, stripslashes($congreso), 'LTBR',0,'L',1);
+                $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($nacional), 'LTBR', 'L', 1);
+                $this->ln(10);
+            }
+            if ($this->getPeriodo_oid() > CYT_SOLICITUD_PERIODO_2016) {
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth() - 178, 8, CYT_MSG_SOLICITUD_PDF_LUGAR . ":");
+                $this->SetFillColor(225, 225, 225);
+                $this->Cell($this->getMaxWidth() - 98, 8, utf8_decode($this->getDs_lugardeltrabajo()), 'LTBR', 0, 'L', 1);
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth() - 168, 8, CYT_MSG_SOLICITUD_PDF_FECHA . ":");
+                $this->SetFillColor(225, 225, 225);
+                $this->Cell($this->getMaxWidth() - 168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajo()), 'LTBR', 0, 'L', 1);
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth() - 170, 8, CYT_MSG_SOLICITUD_PDF_FECHA_HASTA . ":");
+                $this->SetFillColor(225, 225, 225);
+                $this->Cell($this->getMaxWidth() - 168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajohasta()), 'LTBR', 0, 'L', 1);
+            } else {
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth() - 170, 8, CYT_MSG_SOLICITUD_PDF_LUGAR . ":");
+                $this->SetFillColor(225, 225, 225);
+                $this->Cell($this->getMaxWidth() - 95, 8, utf8_decode($this->getDs_lugardeltrabajo()), 'LTBR', 0, 'L', 1);
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth() - 155, 8, CYT_MSG_SOLICITUD_PDF_FECHA . ":");
+                $this->SetFillColor(225, 225, 225);
+                $this->Cell($this->getMaxWidth() - 150, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajo()), 'LTBR', 0, 'L', 1);
+            }
+            $this->ln(10);
+            if ($this->getPeriodo_oid() > intval(CYT_SOLICITUD_PERIODO_2016)) {
+                $this->SetFillColor(255, 255, 255);
+                $this->Cell($this->getMaxWidth(), 8, CYT_MSG_SOLICITUD_PDF_RELEVANCIA_EVENTO . ":");
+                $this->ln(6);
+                $this->SetFillColor(225, 225, 225);
+                $this->MultiCell($this->getMaxWidth(), 8, utf8_decode($this->getDs_relevanciatrabajo()), 'LTBR', 'L', 1);
+                $this->ln(10);
+            }
+        }
+        else{
+            $this->SetFillColor(255, 255, 255);
+
+                $x = $this->GetX();
+                $y = $this->GetY();
+                $this->MultiCell($this->getMaxWidth() - 150, 4, utf8_decode(CYT_MSG_SOLICITUD_PDF_NOMBRE_REUNION));
+                $this->SetXY($x + 40, $y - 1);
+
+
+
+            $this->SetFillColor(225, 225, 225);
+            //$this->Cell ( 145, 8, stripslashes($ds_congreso), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_congreso()), 'LTBR', 'L', 1);
+            $this->ln(10);
+            if ($this->getBl_nacional()) {
+                $this->SetFillColor(255, 255, 255);
+                $this->SetFont('Arial', '', 10);
+                $this->Cell($this->getMaxWidth() - 150, 8, utf8_decode(CYT_MSG_SOLICITUD_PDF_CARACTER) . ":");
+                $this->SetFillColor(225, 225, 225);
+                switch ($this->getBl_nacional()) {
+                    case CYT_CD_NACIONAL:
+                        $nacional = CYT_DS_NACIONAL;
+                        break;
+                    case CYT_CD_INTERNACIONAL:
+                        $nacional = CYT_DS_INTERNACIONAL;
+                        break;
+                }
+                //	$this->Cell ( 145, 8, stripslashes($congreso), 'LTBR',0,'L',1);
+                $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($nacional), 'LTBR', 'L', 1);
+                $this->ln(10);
+                $this->SetFillColor(255,255,255);
+                $this->SetFont ( 'Arial', '', 10 );
+                $this->Cell ( $this->getMaxWidth()-140, 8, utf8_decode(CYT_LBL_SOLICITUD_LINK_REUNION_PDF).":");
+                $this->SetFillColor(225,225,225);
+                //$this->Cell ( $this->getMaxWidth()-50, 8, utf8_decode($this->getDs_linkreunion()), 'LTBR',0,'L',1);
+                $this->MultiCell($this->getMaxWidth()-50, 4, utf8_decode($this->getDs_linkreunion()), 'LTBR', 'L', 1);
+                $this->ln(10);
+            }
+
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($this->getMaxWidth() - 178, 8, CYT_MSG_SOLICITUD_PDF_LUGAR . ":");
+            $this->SetFillColor(225, 225, 225);
+            $this->Cell($this->getMaxWidth() - 98, 8, utf8_decode($this->getDs_lugardeltrabajo()), 'LTBR', 0, 'L', 1);
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($this->getMaxWidth() - 168, 8, CYT_MSG_SOLICITUD_PDF_FECHA . ":");
+            $this->SetFillColor(225, 225, 225);
+            $this->Cell($this->getMaxWidth() - 168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajo()), 'LTBR', 0, 'L', 1);
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($this->getMaxWidth() - 170, 8, CYT_MSG_SOLICITUD_PDF_FECHA_HASTA . ":");
+            $this->SetFillColor(225, 225, 225);
+            $this->Cell($this->getMaxWidth() - 168, 8, CYTSecureUtils::formatDateToView($this->getDt_fechatrabajohasta()), 'LTBR', 0, 'L', 1);
+
+            $this->ln(10);
+
+            $this->SetFillColor(255, 255, 255);
+            $this->Cell($this->getMaxWidth(), 8, CYT_MSG_SOLICITUD_PDF_RELEVANCIA_EVENTO . ":");
+            $this->ln(6);
+            $this->SetFillColor(225, 225, 225);
+            $this->MultiCell($this->getMaxWidth(), 8, utf8_decode($this->getDs_relevanciatrabajo()), 'LTBR', 'L', 1);
+            $this->ln(10);
+
+            $this->SetFillColor(255, 255, 255);
+            $this->SetFont('Arial', '', 10);
+            $titulo = ($this->getBl_congreso() == CYT_CD_CONFERENCIA) ? CYT_MSG_SOLICITUD_PDF_TITULO_CONFERENCIA . ':' : CYT_MSG_SOLICITUD_PDF_TITULO_TRABAJO . ':';
+            $this->Cell($this->getMaxWidth() - 150, 8, utf8_decode($titulo));
+            $this->SetFillColor(225, 225, 225);
+            //	$this->Cell ( 145, 8, stripslashes($ds_titulotrabajo), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_titulotrabajo()), 'LTBR', 'L', 1);
+            $this->ln(10);
+            $this->SetFillColor(255, 255, 255);
+            $autor = ($this->getBl_congreso() == CYT_CD_CONFERENCIA) ? CYT_MSG_SOLICITUD_PDF_AUTOR_CONFERENCIA . ':' : CYT_MSG_SOLICITUD_PDF_AUTOR_TRABAJO . ':';
+            $this->Cell($this->getMaxWidth() - 150, 8, $autor);
+            $this->SetFillColor(225, 225, 225);
+            //$this->Cell ( 145, 8, stripslashes($ds_autorestrabajo), 'LTBR',0,'L',1);
+            $this->MultiCell($this->getMaxWidth() - 40, 8, utf8_decode($this->getDs_autorestrabajo()), 'LTBR', 'L', 1);
+            $this->ln(10);
+
+
+        }
 		$this->SetFillColor(255,255,255);
 		$resumen = ($this->getBl_congreso()==CYT_CD_CONFERENCIA)?CYT_MSG_SOLICITUD_PDF_RESUMEN_CONFERENCIA:CYT_MSG_SOLICITUD_PDF_RESUMEN_TRABAJO;
 		$this->Cell ( $this->getMaxWidth(), 8, CYT_MSG_SOLICITUD_PDF_RESUMEN.$resumen.":");

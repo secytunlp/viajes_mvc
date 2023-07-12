@@ -127,9 +127,10 @@ class Solicitud extends Entity{
 	
 	private $tipoinvestigador_oid;
 	
-	private $ds_googleScholar;	
-	
-	public function __construct(){
+	private $ds_googleScholar;
+    private $ds_linkreunion;
+
+    public function __construct(){
 		 
 		
 		  $this->docente = new Docente();
@@ -247,6 +248,22 @@ class Solicitud extends Entity{
 		  $this->ds_disciplina = "";	
 		  $this->proyectos= new ItemCollection();
 	}
+
+    /**
+     * @return mixed
+     */
+    public function getDs_linkreunion()
+    {
+        return $this->ds_linkreunion;
+    }
+
+    /**
+     * @param mixed $ds_linkreunion
+     */
+    public function setDs_linkreunion($ds_linkreunion)
+    {
+        $this->ds_linkreunion = $ds_linkreunion;
+    }
 
 
 

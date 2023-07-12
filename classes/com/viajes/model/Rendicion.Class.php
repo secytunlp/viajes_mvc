@@ -130,7 +130,7 @@ class Rendicion extends Entity{
 
 	public function __toString(){
 
-		return "";
+		return $this->getDs_investigador();
 	}
 
 
@@ -198,5 +198,8 @@ class Rendicion extends Entity{
 	{
 	    $this->nu_cuil = $nu_cuil;
 	}
+
+
+
 }
 ?>

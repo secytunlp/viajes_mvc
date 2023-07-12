@@ -117,16 +117,20 @@ class CMPSolicitudForm extends CMPForm{
 		$fieldTipoEvento->getInput()->setIsVisible(false);
 		$fieldTipoEvento->getInput()->addProperty( 'onChange', 'seleccionarTipoEvento(this)' );
 		$fieldset->addField( $fieldTipoEvento );
+
+		$field = FieldBuilder::buildFieldText ( CYT_LBL_SOLICITUD_LINK_REUNION, "ds_linkreunion", "","",80);
+		//$field->getInput()->addProperty("placeholder", "https://scholar.google.com/citations?user=...=es");
+		$fieldset->addField( $field );
 		
-		$fieldTituloTrabajo = FieldBuilder::buildFieldText ( "", "ds_titulotrabajo") ;
+		$fieldTituloTrabajo = FieldBuilder::buildFieldText ( "", "ds_titulotrabajo", "","",80) ;
 		$fieldTituloTrabajo->getInput()->setIsVisible(false);
 		$fieldset->addField( $fieldTituloTrabajo );
 		
-		$fieldAutorTrabajo = FieldBuilder::buildFieldText ( "", "ds_autorestrabajo") ;
+		$fieldAutorTrabajo = FieldBuilder::buildFieldText ( "", "ds_autorestrabajo", "","",80) ;
 		$fieldAutorTrabajo->getInput()->setIsVisible(false);
 		$fieldset->addField( $fieldAutorTrabajo );
 		
-		$fieldAutorTrabajo = FieldBuilder::buildFieldText ( "", "ds_congreso") ;
+		$fieldAutorTrabajo = FieldBuilder::buildFieldText ( "", "ds_congreso", "","",80) ;
 		$fieldAutorTrabajo->getInput()->setIsVisible(false);
 		$fieldset->addField( $fieldAutorTrabajo );
 		

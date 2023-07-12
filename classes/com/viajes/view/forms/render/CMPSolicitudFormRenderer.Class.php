@@ -687,8 +687,20 @@ class CMPSolicitudFormRenderer extends DefaultFormRenderer {
 			}
 			else $xtpl->assign("display", 'none');
 			$xtpl->parse("main.ds_autorestrabajo");
-			
-			$field = $fields['ds_congreso'];		
+
+            $field = $fields['ds_linkreunion'];
+            $input = $field->getInput();
+            $label = $field->getLabel();
+            $this->renderLabelTab( $label, $input, $xtpl );
+            $this->renderInputTab( $input, $xtpl );
+            $xtpl->assign("minWidth", $field->getMinWidth());
+            if( $input->getIsVisible() ){
+                $xtpl->assign("display", 'block');
+            }
+            else $xtpl->assign("display", 'none');
+            $xtpl->parse("main.ds_linkreunion");
+
+            $field = $fields['ds_congreso'];
 			$input = $field->getInput();
 			$label = $field->getLabel();	
 			$this->renderLabelTab( $label, $input, $xtpl );
